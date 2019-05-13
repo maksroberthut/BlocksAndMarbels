@@ -1,4 +1,6 @@
-package Physic;
+package Physicsengine;
+
+import java.time.LocalTime;
 
 /**
  * Interface that defines the functions for the physics lopp that gets calculated every Frame
@@ -6,7 +8,9 @@ package Physic;
 public interface Physics {
 
     //Constants
-    static final double gravity = 9.8;//Gravitational Force downwards
+    double gravity = 9.8;//Gravitational Force downward
+
+
 
 
     /**
@@ -69,6 +73,17 @@ public interface Physics {
         return potentialForce;
 
     }
+
+    static double [] updatePhysics(double  firstposition, double secondposition, LocalTime fistFrame, LocalTime secondframe, double mass, double height){
+
+        double physicsproperties[] = {};
+
+        return physicsproperties;
+    }
+
+
+
+
 
 
 }
