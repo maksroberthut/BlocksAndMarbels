@@ -1,5 +1,6 @@
 package sample;
 
+import Physicsengine.Physics;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -12,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-public class Controller {
+public class Controller implements Physics {
 
 
     public Label ballRollt;
@@ -60,6 +61,7 @@ public class Controller {
 
 
     public void stoppeBall(ActionEvent actionEvent) {
+
 
     }
 

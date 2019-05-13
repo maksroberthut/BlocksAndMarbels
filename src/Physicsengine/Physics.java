@@ -1,5 +1,8 @@
 package Physicsengine;
 
+import Elements.Ball;
+import javafx.scene.shape.Circle;
+
 import java.time.LocalTime;
 
 /**
@@ -74,9 +77,15 @@ public interface Physics {
 
     }
 
-    static double [] updatePhysics(double  firstposition, double secondposition, LocalTime fistFrame, LocalTime secondframe, double mass, double height){
+    static double [] updatePhysics(Ball ball, LocalTime fistFrame, LocalTime secondframe, double mass, double height){
 
         double physicsproperties[] = {};
+        double position[] = Ball.getBallPosition(ball);
+
+
+
+
+
 
         return physicsproperties;
     }
