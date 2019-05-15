@@ -26,7 +26,7 @@ public class Controller {
     double newX, newY;
 
 
-    public void starteSpiel(ActionEvent actionEvent) {
+/*    public void starteSpiel(ActionEvent actionEvent) {
         //hier greift das Programm auf die Zeit zu
         System.out.println("Started");
         //https://www.programcreek.com/java-api-examples/?api=javafx.animation.AnimationTimer
@@ -36,10 +36,8 @@ public class Controller {
                 // calculate time since last update.
                 moveBall();
             }
-        }.start();                                                                  // Was diese?
-
-
-    }
+        }.start();
+    }*/
 
     //geschwindigkeit und beschleuniguf wurden initialisiert
     double geschw;
@@ -69,5 +67,18 @@ public class Controller {
 
     public void vonVorne(ActionEvent actionEvent) {
 
+    }
+
+    public void OnMouseClicked(MouseEvent mouseEvent) {
+        //hier greift das Programm auf die Zeit zu
+        System.out.println("Started");
+        //https://www.programcreek.com/java-api-examples/?api=javafx.animation.AnimationTimer
+        //60 fps
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
+                // calculate time since last update.
+                moveBall();
+            }
+        }.start();
     }
 }
