@@ -1,6 +1,5 @@
 package sample;
 
-import Physicsengine.Physics;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -8,21 +7,26 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class Controller implements Physics {
+public class Controller {
 
 
     public Label ballRollt;
     public GridPane canvas;
     public Label ballSteht;
     public Circle kugel;
-    double newX,newY;
+    public TabPane tapPane;
+    public Text caption;
+    double newX, newY;
 
-    public void starteSpiel(ActionEvent actionEvent) {
+
+/*    public void starteSpiel(ActionEvent actionEvent) {
         //hier greift das Programm auf die Zeit zu
         System.out.println("Started");
         //https://www.programcreek.com/java-api-examples/?api=javafx.animation.AnimationTimer
@@ -32,10 +36,8 @@ public class Controller implements Physics {
                 // calculate time since last update.
                 moveBall();
             }
-        }.start();                                                                  // Was diese?
-
-
-    }
+        }.start();
+    }*/
 
     //geschwindigkeit und beschleunigung auf wurden initialisiert
     double geschw;
@@ -59,13 +61,24 @@ public class Controller implements Physics {
         ball1.setLayoutY(finalY - ball1.getLayoutBounds().getMinY());*/
     }
 
-
     public void stoppeBall(ActionEvent actionEvent) {
-
 
     }
 
     public void vonVorne(ActionEvent actionEvent) {
 
+    }
+
+    public void OnMouseClicked(MouseEvent mouseEvent) {
+        //hier greift das Programm auf die Zeit zu
+        System.out.println("Started");
+        //https://www.programcreek.com/java-api-examples/?api=javafx.animation.AnimationTimer
+        //60 fps
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
+                // calculate time since last update.
+                moveBall();
+            }
+        }.start();
     }
 }
