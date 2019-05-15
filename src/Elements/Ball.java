@@ -3,6 +3,10 @@ package Elements;
 import Physicsengine.Physics;
 import javafx.scene.shape.Circle;
 
+/**
+ * Class that creates the ball with different properties
+ */
+
 public class Ball extends Circle implements Physics{
 
     public float xDimension;
@@ -27,7 +31,7 @@ public class Ball extends Circle implements Physics{
     }
 
     /**
-     * Function for getting the Position of the Ball in the world;
+     * Function for getting the Position of the Ball in the world as a Vector of coordinates;
      * @param ball
      * First entry = x-Coordinate, second entry y-Coordinate, third entry z-translate,
      * @return position[]
@@ -42,11 +46,42 @@ public class Ball extends Circle implements Physics{
         return position;
     }
 
-    public static double getxPosition(Ball ball){
+    /**
+     * Getting x Position of the Ball
+     * @param ball
+     * @return double positionX
+     */
+    public static double getXPosition(Ball ball){
 
         double [] position = Ball.getBallPosition(ball);
         double positionx = position[0];
         return positionx;
+
+    }
+
+    /**
+     * Getting y Position of the Ball
+     * @param ball
+     * @return double positionY
+     */
+    public static double getYPosition(Ball ball){
+
+        double [] position = Ball.getBallPosition(ball);
+        double positionY = position[1];
+        return positionY;
+
+    }
+
+    /**
+     * Getting z Position of the Ball
+     * @param ball
+     * @return
+     */
+    public static double getZPosition(Ball ball){
+
+        double [] position = Ball.getBallPosition(ball);
+        double positionZ = position[2];
+        return positionZ;
 
     }
 
