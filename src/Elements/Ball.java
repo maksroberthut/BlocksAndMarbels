@@ -42,6 +42,14 @@ public class Ball extends Circle implements Physics{
         return position;
     }
 
+    public static double getxPosition(Ball ball){
+
+        double [] position = Ball.getBallPosition(ball);
+        double positionx = position[0];
+        return positionx;
+
+    }
+
     /**
      * Funtion to set the new position of the Ball
      * @param ball
@@ -50,9 +58,9 @@ public class Ball extends Circle implements Physics{
     public Circle setPosition(Ball ball){
 
          double position[]=getBallPosition(ball);
-        ball.setCenterX(position[1]);
-        ball.setCenterY(position[2]);
-        ball.setTranslateZ(position[3]);
+        ball.setCenterX(position[0]);
+        ball.setCenterY(position[1]);
+        ball.setTranslateZ(position[2]);
 
 
         return ball;
