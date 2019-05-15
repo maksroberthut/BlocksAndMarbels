@@ -1,4 +1,6 @@
 package Physicsengine;
+import Elements.Ball;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -17,33 +19,7 @@ public class Timestepping implements Physics {
      * Gamephysics get updated almost every second frame
      */
         public Timestepping() {
-            //Setting first Frame at current Time;
-            LocalTime startframe = LocalTime.now();
-            double startframeFormatted = timeFormatter(startframe);
 
-            while(true){
-
-                 LocalTime currentTime = LocalTime.now();
-                 //Store the time elapsed since last frame began
-                 double currenTimeFormatted = timeFormatter(currentTime);
-                 accumulator += currenTimeFormatted - startframeFormatted ;
-
-                 //Record the starting of the current Frame
-                startframeFormatted = currenTimeFormatted;
-
-                //Clamping dt so the updatePhysics function and render game function dont get called on every frame
-                if (accumulator> 2/fps){
-                    accumulator = 2.0/fps;
-                }
-
-                while(accumulator>dt){
-                   // Physics.updatePhysics();
-                    //RenderGame();
-                    accumulator -= dt;
-
-                }
-
-            }
         }
 
     /**
@@ -63,6 +39,42 @@ public class Timestepping implements Physics {
             return doubleframe;
 
         }
+    public void timestepping(Ball ball){
+
+        //Setting first Frame at current Time;
+        LocalTime startframe = LocalTime.now();
+        double startframeFormatted = timeFormatter(startframe);
+
+
+        while(true){
+
+            LocalTime currentTime = LocalTime.now();
+            //Store the time elapsed since last frame began
+            double currenTimeFormatted = timeFormatter(currentTime);
+            accumulator += currenTimeFormatted - startframeFormatted ;
+
+
+            //Record the starting of the current Frame
+            startframeFormatted = currenTimeFormatted;
+
+            //Clamping dt so the updatePhysics function and render game function dont get called on every frame
+            if (accumulator> 2/fps){
+                accumulator = 2.0/fps;
+            }
+
+            while(accumulator>dt){
+                // Physics.updatePhysics();
+                //RenderGame();
+                accumulator -= dt;
+
+            }
+
+        }
+
+    }
+
+
+
 
 
 

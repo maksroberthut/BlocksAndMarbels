@@ -39,7 +39,7 @@ public class Controller {
         }.start();
     }*/
 
-    //geschwindigkeit und beschleuniguf wurden initialisiert
+    //geschwindigkeit und beschleunigung auf wurden initialisiert
     double geschw;
     double beschl = 9.81*1/60;
 

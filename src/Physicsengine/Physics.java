@@ -77,10 +77,20 @@ public interface Physics {
 
     }
 
-    static double [] updatePhysics(Ball ball, LocalTime fistFrame, LocalTime secondframe, double mass, double height){
+
+    /**
+     *
+     * @param ball
+     * @param fistFrame
+     * @param secondframe
+     * @param mass
+     * @param height
+     * @return
+     */
+    static double [] updatePhysics( double position1, double position2, Ball ball, LocalTime fistFrame, LocalTime secondframe, double mass, double height){
 
         double physicsproperties[] = {};
-        double position[] = Ball.getBallPosition(ball);
+
 
 
 
