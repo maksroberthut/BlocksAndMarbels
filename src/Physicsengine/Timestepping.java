@@ -8,9 +8,13 @@ import java.util.Date;
 
 public class Timestepping implements Physics {
 
-    static final int   fps = 60;
+    private static int   fps = 60;
     private static final double dt = 1.0/fps;
     private double accumulator = 0;
+    private double dpx = 0;
+    private double dpy = 0;
+    private double dpz = 0;
+
 
     //Constructor
 
@@ -39,11 +43,21 @@ public class Timestepping implements Physics {
             return doubleframe;
 
         }
+
+    /**
+     * Function that does the calculation of physics depending on the framerate
+      * @param ball
+     */
     public void timestepping(Ball ball){
 
         //Setting first Frame at current Time;
         LocalTime startframe = LocalTime.now();
         double startframeFormatted = timeFormatter(startframe);
+
+        double Xposition = Ball.getXPosition(ball);
+        double Yposition = Ball.getYPosition(ball);
+        double Zposition = Ball.getZPosition(ball);
+
 
 
         while(true){
@@ -68,6 +82,8 @@ public class Timestepping implements Physics {
                 accumulator -= dt;
 
             }
+
+            //Todo Thread öffnen //Timer hinzufügen
 
         }
 
