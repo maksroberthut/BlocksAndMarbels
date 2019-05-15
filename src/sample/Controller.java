@@ -1,6 +1,5 @@
 package sample;
 
-import Physicsengine.Physics;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -8,19 +7,24 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class Controller implements Physics {
+public class Controller {
 
 
     public Label ballRollt;
     public GridPane canvas;
     public Label ballSteht;
     public Circle kugel;
-    double newX,newY;
+    public TabPane tapPane;
+    public Text caption;
+    double newX, newY;
+
 
     public void starteSpiel(ActionEvent actionEvent) {
         //hier greift das Programm auf die Zeit zu
@@ -59,9 +63,7 @@ public class Controller implements Physics {
         ball1.setLayoutY(finalY - ball1.getLayoutBounds().getMinY());*/
     }
 
-
     public void stoppeBall(ActionEvent actionEvent) {
-
 
     }
 
