@@ -20,27 +20,39 @@ import javafx.util.Duration;
 
 public class Controller {
 
+
+    /**
+     *
+     */
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
             moveBall();
+            vel = moveBall();
+            double roundVel = Math.ceil(vel);
+            String velstring = Double.toString(roundVel);
+            VelocityLabel.setText(velstring);
+
         }
     };
 
 
 
-    public Label ballRollt;
-    public GridPane canvas;
-    public Label ballSteht;
     public Circle kugel;
-    public TabPane tapPane;
+    private double newX, newY;
+    public double ballStartX;
+    public double ballStarty;
+    public double startposition[];
 
-    double newX, newY;
+    private double vel;
+    private double gravity = 9.81/60;
 
 
 
     @FXML
     public Slider slider;
+    @FXML
+    public Label VelocityLabel;
 
 
     @FXML
@@ -63,15 +75,22 @@ public class Controller {
         return sliderValue;
     }
 
-
-
     /**
-     * Methode for starting our animation
+     * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
      * @autor Maksymilian Huytra
      */
     @FXML
-    public void startAnimation() {
-          animationTimer.start();
+    public double[] startAnimation() {
+
+        ballStartX = kugel.getCenterX();
+        ballStarty = kugel.getCenterY();
+
+        startposition = new double[]{ballStartX,ballStarty};
+
+        animationTimer.start();
+
+          return startposition;
+
     }
 
     /**
@@ -81,6 +100,20 @@ public class Controller {
     @FXML
     public void  stopAnimation(){
         animationTimer.stop();
+    }
+    @FXML
+    public void resetAnimation(){
+
+
+        animationTimer.stop();
+
+        kugel.setCenterY(startposition[0]);
+        kugel.setCenterY(startposition[1]);
+
+        vel = 0;
+
+
+
     }
 
 
@@ -111,39 +144,31 @@ public class Controller {
         }.start();
     }*/
 
-    //geschwindigkeit und beschleunigung auf wurden initialisiert
-    double geschw;
-    double beschl = 9.81*1/60;
 
-    public void moveBall(){
+
+    public double moveBall(){
         double sliderValue = handleSliderChange();
         double newVelosity;
         // formel für die geschwindigkeit
-        geschw = geschw + beschl;
-        newVelosity = geschw * sliderValue;
+        vel = vel + gravity;
+        newVelosity = vel * sliderValue;
 
 
         //kugel soll für jeden Frame eine neue Position annehmen
         newX = kugel.getCenterX();
-        newY = kugel.getCenterY() + geschw;
+        newY = kugel.getCenterY() + vel;
 
         kugel.setCenterX(newX);
         kugel.setCenterY(newY);
 
         System.out.println("geschw: " + newVelosity);
 
+        return newVelosity;
 
-       /* double finalY=580;
-        ball1.setLayoutY(finalY - ball1.getLayoutBounds().getMinY());*/
-    }
 
-    public void stoppeBall(ActionEvent actionEvent) {
 
     }
 
-    public void vonVorne(ActionEvent actionEvent) {
-
-    }
 
 
 
