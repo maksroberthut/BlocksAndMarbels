@@ -13,6 +13,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -38,6 +39,7 @@ public class Controller {
     public Pane targetEbene1;
    @FXML
    public Rectangle element1;
+    public Rectangle element2;
     /**
      *
      */
@@ -240,7 +242,9 @@ public class Controller {
 
 
                          Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                         c.setFill(new ImagePattern(new Image("/resource/Elem1.png")));
+                     //    element1.setFill(new ImagePattern(new Image("/resource/Elem1.png")));
+
+
 
 
                 if (dragEvent.getTarget() instanceof Pane) {
