@@ -26,6 +26,7 @@ public class Controller {
 
     public Circle element1;
     public Pane target;
+    public Pane targetEbene1;
     /**
      *
      */
