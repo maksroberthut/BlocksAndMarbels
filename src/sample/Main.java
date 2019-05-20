@@ -11,6 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("NewTryFXML3.fxml"));
+
         primaryStage.setTitle("Blocks and Marbels");
         primaryStage.setScene(new Scene(root, 1200, 1000));
         primaryStage.show();

@@ -13,20 +13,31 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+
+
 
 public class Controller {
 
 
-    public Circle element1;
+  @FXML
     public Pane target;
+   @FXML
     public Pane targetEbene1;
+   @FXML
+   public StackPane element1;
     /**
      *
      */
@@ -60,11 +71,6 @@ public class Controller {
     @FXML
     public Label VelocityLabel;
 
-
-    @FXML
-    public void initilize(){
-
-    }
 
 
     /**
@@ -123,21 +129,10 @@ public class Controller {
     }
 
 
-/*    public void starteSpiel(ActionEvent actionEvent) {
-        //hier greift das Programm auf die Zeit zu
-        System.out.println("Started");
-        //https://www.programcreek.com/java-api-examples/?api=javafx.animation.AnimationTimer
-        //60 fps
-        new AnimationTimer() {
-            public void handle(long currentNanoTime) {
-                // calculate time since last update.
-                moveBall();
-            }
-        }.start();
-    }*/
 
 
 
+@FXML
     public double moveBall(){
         double sliderValue = handleSliderChange();
         double newVelosity;
@@ -161,16 +156,27 @@ public class Controller {
 
     }
 
+    /* Meysa */
+  /*  void insertImage(Image i, Shape rectangle){
 
+
+        element1.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
+
+    }*/
+
+
+
+    @FXML
     public void drag(MouseEvent mouseEvent) {
+
         /* drag was detected, start a drag-and-drop gesture*/
         /* allow any transfer mode */
         Dragboard db = element1.startDragAndDrop(TransferMode.ANY);
-
+   //     element1.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
 
         /* Put a string on a dragboard */
         ClipboardContent content = new ClipboardContent();
-        content.putString("circle");
+        content.putString("rectangle");
         db.setContent(content);
         SnapshotParameters param = new SnapshotParameters();
         param.setFill(Color.TRANSPARENT);
@@ -182,7 +188,7 @@ public class Controller {
         System.out.println("Drag detected");
     }
 
-
+@FXML
     public void dragOver(DragEvent dragEvent) {
 
         /* data is dragged over the target */
@@ -202,7 +208,7 @@ public class Controller {
 
 
 
-
+@FXML
     public void dragEntered(DragEvent dragEvent) {
 
         /* the drag-and-drop gesture entered the target */
@@ -219,7 +225,7 @@ public class Controller {
 
 
 
-
+@FXML
     public void dragExited(DragEvent dragEvent) {
         /* mouse moved away, remove the graphical cues */
 //      target.setFill(Color.BLACK);
@@ -228,7 +234,7 @@ public class Controller {
         System.out.println("Drag exited");
     }
 
-
+@FXML
     public void dragDropped(DragEvent dragEvent) {
         /* data dropped */
         /* if there is a string data on dragboard, read it and use it */
@@ -238,14 +244,16 @@ public class Controller {
 
         if (db.hasString()) {
 //                    target.setText(db.getString());
-            if (db.getString().equals("circle")) {
-                Circle c = new Circle(dragEvent.getX(), dragEvent.getY(), 33, Color.BLACK);
+            if (db.getString().equals("rectangle")) {
+
+
+                         Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
+                         c.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
 
 
                 if (dragEvent.getTarget() instanceof Pane) {
                     Pane targetPane = (Pane) dragEvent.getTarget();
                     targetPane.getChildren().add(c);
-
 
                 }
                 success = true;
@@ -257,11 +265,12 @@ public class Controller {
             /* let the source know whether the string was successfully
              * transferred and used */
             ;
+
         }
+
     }
 
-
-
+    @FXML
     public void dragDone(DragEvent dragEvent) {
         /* the drag and drop gesture ended */
         /* if the data was successfully moved, clear it */
@@ -272,9 +281,5 @@ public class Controller {
         dragEvent.consume();
         System.out.println("Drag done");
     }
-
-
-
-
 
 }
