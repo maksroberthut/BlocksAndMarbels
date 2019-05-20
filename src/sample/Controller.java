@@ -9,11 +9,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -21,6 +24,8 @@ import javafx.util.Duration;
 public class Controller {
 
 
+    public Circle element1;
+    public Pane target;
     /**
      *
      */
@@ -117,20 +122,6 @@ public class Controller {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*    public void starteSpiel(ActionEvent actionEvent) {
         //hier greift das Programm auf die Zeit zu
         System.out.println("Started");
@@ -169,6 +160,117 @@ public class Controller {
 
     }
 
+
+    public void drag(MouseEvent mouseEvent) {
+        /* drag was detected, start a drag-and-drop gesture*/
+        /* allow any transfer mode */
+        Dragboard db = element1.startDragAndDrop(TransferMode.ANY);
+
+
+        /* Put a string on a dragboard */
+        ClipboardContent content = new ClipboardContent();
+        content.putString("circle");
+        db.setContent(content);
+        SnapshotParameters param = new SnapshotParameters();
+        param.setFill(Color.TRANSPARENT);
+        db.setDragView(element1.snapshot(param, null));
+
+        mouseEvent.consume();
+
+
+        System.out.println("Drag detected");
+    }
+
+
+    public void dragOver(DragEvent dragEvent) {
+
+        /* data is dragged over the target */
+        /* accept it only if it is not dragged from the same node
+         * and if it has a string data */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+            /* allow for moving */
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+//                    target.setStyle("-fx-background-color: silver");
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag over");
+    }
+
+
+
+
+
+    public void dragEntered(DragEvent dragEvent) {
+
+        /* the drag-and-drop gesture entered the target */
+        /* show to the user that it is an actual gesture target */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+
+            target.setStyle("-fx-background-color: silver");
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag entered");
+    }
+
+
+
+
+    public void dragExited(DragEvent dragEvent) {
+        /* mouse moved away, remove the graphical cues */
+//      target.setFill(Color.BLACK);
+        target.setStyle("-fx-background-color: white");
+        dragEvent.consume();
+        System.out.println("Drag exited");
+    }
+
+
+    public void dragDropped(DragEvent dragEvent) {
+        /* data dropped */
+        /* if there is a string data on dragboard, read it and use it */
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+
+
+        if (db.hasString()) {
+//                    target.setText(db.getString());
+            if (db.getString().equals("circle")) {
+                Circle c = new Circle(dragEvent.getX(), dragEvent.getY(), 33, Color.BLACK);
+
+
+                if (dragEvent.getTarget() instanceof Pane) {
+                    Pane targetPane = (Pane) dragEvent.getTarget();
+                    targetPane.getChildren().add(c);
+
+
+                }
+                success = true;
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();
+                System.out.println("Drag Dropped");
+            }
+            /* let the source know whether the string was successfully
+             * transferred and used */
+            ;
+        }
+    }
+
+
+
+    public void dragDone(DragEvent dragEvent) {
+        /* the drag and drop gesture ended */
+        /* if the data was successfully moved, clear it */
+//                if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+//
+//                    elementNeu.setRadius(10);
+//                }
+        dragEvent.consume();
+        System.out.println("Drag done");
+    }
 
 
 

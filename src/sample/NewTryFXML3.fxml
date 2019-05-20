@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="canvas" alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="/sample/NewTryCss.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane fx:id="canvas" alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="/sample/NewTryCss.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <Label fx:id="ballRollt" prefHeight="21.0" prefWidth="319.0" GridPane.rowIndex="0" />
     <Label fx:id="ballSteht" prefHeight="25" prefWidth="319.0" GridPane.rowIndex="0" />
     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -38,14 +38,7 @@
                     </Tab>
                     <Tab text="Ebene 2">
                         <content>
-                            <Pane prefHeight="200.0" prefWidth="200.0">
-                                <children>
-                                    <ImageView fitHeight="703.0" fitWidth="703.0" layoutX="1.0" layoutY="9.0">
-                                        <image>
-                                            <Image url="@../resource/Gitter.png" />
-                                        </image>
-                                    </ImageView>
-                                </children></Pane>
+                            <Pane fx:id="target" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0" />
                         </content>
                     </Tab>
                     <Tab text="Ebene 3">
@@ -95,6 +88,7 @@
                <Font name="Antonio Regular" size="46.0" />
             </font>
          </Label>
+         <Circle fx:id="element1" fill="DODGERBLUE" layoutX="73.0" layoutY="82.0" onDragDetected="#drag" onDragDone="#dragDone" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
       </children>
     </Pane>
    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -103,47 +97,47 @@
             <children>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="311.0">
                       <image>
-                          <Image url="@../resource/Element5.png" />
+                          <Image url="@Ele7.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="76.0">
                       <image>
-                          <Image url="@../resource/Element1.1.png" />
+                          <Image url="@Ele1.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="76.0">
                       <image>
-                          <Image url="@../resource/Element3.png" />
+                          <Image url="@Ele2.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="76.0">
                       <image>
-                          <Image url="@../resource/Element2.png" />
+                          <Image url="@Ele3.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="311.0">
                       <image>
-                          <Image url="@../resource/Element4.png" />
+                          <Image url="@Ele6.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="193.0">
                       <image>
-                          <Image url="@../resource/Element8.png" />
+                          <Image url="@Ele4.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="429.0">
                       <image>
-                          <Image url="@../resource/Element6.png" />
+                          <Image url="@Ele8.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="193.0">
                       <image>
-                          <Image url="@../resource/Element9.png" />
+                          <Image url="@Ele5.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="429.0">
                       <image>
-                          <Image url="@../resource/Element7.png" />
+                          <Image url="@Ele9.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="193.0">
@@ -170,7 +164,7 @@
                      <Image url="@../resource/Reset.png" />
                   </image>
                </ImageView>
-                    <Slider fx:id="slider" value="0.1" blockIncrement="0.1" layoutX="95.0" layoutY="86.0" majorTickUnit="0.1"  max="1.0" prefHeight="17.0" prefWidth="198.0" showTickMarks="true"  onMouseDragged="#handleSliderChange" />
+                    <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="86.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
             </children>
          </Pane>
       </children>
@@ -187,7 +181,7 @@
                     <Font name="Antonio Regular" size="46.0" />
                 </font>
             </Text>
-            <Label fx:id="VelocityLabel" layoutX="-30" layoutY="82.0"   textFill="#ae3839">
+            <Label fx:id="VelocityLabel" layoutX="-30" layoutY="82.0" textFill="#ae3839">
                 <font>
                     <Font name="Antonio Regular" size="46.0" />
                 </font>
