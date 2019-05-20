@@ -237,22 +237,23 @@
             </children></Pane>
          <Pane prefHeight="252.0" prefWidth="390.0">
             <children>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="95.0" layoutY="16.0" onMouseClicked="#startAnimation">
+               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="95.0" layoutY="116.0" onMouseClicked="#startAnimation">
                   <image>
                      <Image url="@../resource/Play.png" />
                   </image>
                </ImageView>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="16.0" onMouseClicked="#stopAnimation">
+               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="116.0" onMouseClicked="#stopAnimation">
                   <image>
                      <Image url="@../resource/Pause.png" />
                   </image>
                </ImageView>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="16.0" onMouseClicked="#resetAnimation">
+               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="116.0" onMouseClicked="#resetAnimation">
                   <image>
                      <Image url="@../resource/Reset.png" />
                   </image>
                </ImageView>
-                    <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="86.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
+                    <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="186.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="126.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
             </children>
          </Pane>
       </children>
