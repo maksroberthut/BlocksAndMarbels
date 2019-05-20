@@ -104,47 +104,47 @@
             <children>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="311.0">
                       <image>
-                          <Image url="@Ele7.png" />
+                          <Image url="@../resource/Ele7.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="76.0">
                       <image>
-                          <Image url="@Ele1.png" />
+                          <Image url="@../resource/Ele1.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="76.0">
                       <image>
-                          <Image url="@Ele2.png" />
+                          <Image url="@../resource/Ele2.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="76.0">
                       <image>
-                          <Image url="@Ele3.png" />
+                          <Image url="@../resource/Ele3.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="311.0">
                       <image>
-                          <Image url="@Ele6.png" />
+                          <Image url="@../resource/Ele6.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="193.0">
                       <image>
-                          <Image url="@Ele4.png" />
+                          <Image url="@../resource/Ele4.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="39.0" layoutY="429.0">
                       <image>
-                          <Image url="@Ele8.png" />
+                          <Image url="@../resource/Ele8.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="193.0">
                       <image>
-                          <Image url="@Ele5.png" />
+                          <Image url="@../resource/Ele5.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="154.0" layoutY="429.0">
                       <image>
-                          <Image url="@Ele9.png" />
+                          <Image url="@../resource/Ele9.png" />
                       </image>
                   </ImageView>
                   <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="193.0">
