@@ -37,7 +37,7 @@ public class Controller {
    @FXML
     public Pane targetEbene1;
    @FXML
-   public StackPane element1;
+   public Rectangle element1;
     /**
      *
      */
@@ -156,14 +156,6 @@ public class Controller {
 
     }
 
-    /* Meysa */
-  /*  void insertImage(Image i, Shape rectangle){
-
-
-        element1.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
-
-    }*/
-
 
 
     @FXML
@@ -248,7 +240,7 @@ public class Controller {
 
 
                          Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                         c.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
+                         c.setFill(new ImagePattern(new Image("/resource/Elem1.png")));
 
 
                 if (dragEvent.getTarget() instanceof Pane) {
