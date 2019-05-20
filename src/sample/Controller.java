@@ -209,7 +209,7 @@ public class Controller {
         if (dragEvent.getGestureSource() != target &&
                 dragEvent.getDragboard().hasString()) {
 
-            target.setStyle("-fx-background-color: silver");
+           // target.setStyle("-fx-background-color: silver");
         }
 
         dragEvent.consume();
@@ -222,7 +222,7 @@ public class Controller {
     public void dragExited(DragEvent dragEvent) {
         /* mouse moved away, remove the graphical cues */
 //      target.setFill(Color.BLACK);
-        target.setStyle("-fx-background-color: white");
+      //  target.setStyle("-fx-background-color: white");
         dragEvent.consume();
         System.out.println("Drag exited");
     }
