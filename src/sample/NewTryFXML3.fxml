@@ -18,7 +18,14 @@
 <?import javafx.scene.text.Text?>
 
 <GridPane fx:id="canvas" alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="/sample/NewTryCss.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-          <Pane prefHeight="633.0" prefWidth="705.0" />
+          <Pane prefHeight="633.0" prefWidth="705.0">
+      <children>
+         <Text layoutX="227.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blocks'n'Marbles">
+            <font>
+               <Font name="Antonio Regular" size="58.0" />
+            </font>
+         </Text>
+      </children></Pane>
     <Pane prefHeight="817.0" prefWidth="780.0" GridPane.rowIndex="1">
         <children>
             <TabPane fx:id="tapPane" layoutX="24.0" layoutY="61.0" prefHeight="720.0" prefWidth="744.0" side="LEFT" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE">
@@ -253,7 +260,14 @@
                   </image>
                </ImageView>
                     <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="186.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="126.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="126.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" width="41.0">
+                  <effect>
+                     <ImageInput>
+                        <source>
+                           <Image url="file:/C:/Users/Rumeysa/IdeaProjects/Blocks/src/resource/Muell.png" />
+                        </source>
+                     </ImageInput>
+                  </effect></Rectangle>
             </children>
          </Pane>
       </children>

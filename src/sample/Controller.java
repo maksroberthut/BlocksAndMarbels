@@ -33,15 +33,17 @@ import javafx.util.Duration;
 public class Controller {
 
 
-  @FXML
+   @FXML
     public Pane target;
    @FXML
     public Pane targetEbene1;
    @FXML
    public Rectangle element1;
-    public Rectangle element2;
+   @FXML
+   public Rectangle element2;
+
     /**
-     *
+     Animation
      */
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
@@ -159,22 +161,25 @@ public class Controller {
     }
 
 
+    /* Drag and Drop Methoden fangen hier an */
 
     @FXML
     public void drag(MouseEvent mouseEvent) {
 
         /* drag was detected, start a drag-and-drop gesture*/
         /* allow any transfer mode */
-        Dragboard db = element1.startDragAndDrop(TransferMode.ANY);
-   //     element1.setFill(new ImagePattern(new Image("/resource/Ele1.png")));
+        Dragboard db = element1.startDragAndDrop(TransferMode.MOVE);
+    //    Dragboard db2 = element2.startDragAndDrop(TransferMode.MOVE);
 
         /* Put a string on a dragboard */
         ClipboardContent content = new ClipboardContent();
         content.putString("rectangle");
         db.setContent(content);
+     //   db2.setContent(content);
         SnapshotParameters param = new SnapshotParameters();
         param.setFill(Color.TRANSPARENT);
         db.setDragView(element1.snapshot(param, null));
+   //     db2.setDragView(element2.snapshot(param, null));
 
         mouseEvent.consume();
 
@@ -242,7 +247,7 @@ public class Controller {
 
 
                          Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                     //    element1.setFill(new ImagePattern(new Image("/resource/Elem1.png")));
+                      //   c.setFill(new ImagePattern(new Image("/resource/Elem1.png")));
 
 
 
