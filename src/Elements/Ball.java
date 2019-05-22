@@ -3,6 +3,8 @@ package Elements;
 import Physicsengine.Physics;
 import javafx.scene.shape.Circle;
 
+import java.util.Vector;
+
 /**
  * Class that creates the ball with different properties
  */
@@ -12,6 +14,7 @@ public class Ball extends Circle implements Physics{
     public float xDimension;
     public float yDimension;
     public float zDimension;
+    Vector position = new Vector(3);
     public  static Circle ball;
 
 

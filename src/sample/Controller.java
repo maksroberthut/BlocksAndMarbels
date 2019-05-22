@@ -1,13 +1,11 @@
 package sample;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
@@ -22,15 +20,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class Controller {
+public class Controller implements Initializable {
 
 
    @FXML
@@ -48,8 +46,8 @@ public class Controller {
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            moveBall();
-            vel = moveBall();
+            //moveBall();
+            //vel = moveBall();
             double roundVel = Math.ceil(vel);
             String velstring = Double.toString(roundVel);
             VelocityLabel.setText(velstring);
@@ -57,7 +55,8 @@ public class Controller {
         }
     };
 
-
+    Path path = new Path();
+    PathTransition pathTransition = new PathTransition();
 
     public Circle kugel;
     private double newX, newY;
@@ -91,6 +90,26 @@ public class Controller {
         return sliderValue;
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        path.getElements().add(new MoveTo(460,110));
+        path.getElements().add(new LineTo(460,300));
+        path.getElements().add(new ArcTo(50,60,-45,420,330,false,true));
+        path.getElements().add(new ArcTo(50,60,45,390,350,false,false));
+        path.getElements().add(new LineTo(390,500));
+        path.getElements().add(new ArcTo(50,60,-45,350,535,false,true));
+        path.getElements().add(new LineTo(230,535));
+        path.getElements().add(new ArcTo(40,40,340,250,520,true,true));
+        path.getElements().add(new LineTo(250,600));
+        pathTransition.setPath(path);
+        pathTransition.setNode(kugel);
+        pathTransition.setCycleCount(1);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setAutoReverse(false);
+
+    }
+
     /**
      * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
      * @autor Maksymilian Huytra
@@ -98,12 +117,17 @@ public class Controller {
     @FXML
     public double[] startAnimation() {
 
+
         ballStartX = kugel.getCenterX();
         ballStarty = kugel.getCenterY();
+        pathTransition.setDuration(Duration.millis(30000*handleSliderChange()));
+        pathTransition.setCycleCount(1);
+        pathTransition.play();
 
         startposition = new double[]{ballStartX,ballStarty};
 
         animationTimer.start();
+
 
           return startposition;
 
@@ -116,12 +140,17 @@ public class Controller {
     @FXML
     public void  stopAnimation(){
         animationTimer.stop();
+        pathTransition.pause();
+
     }
     @FXML
     public void resetAnimation(){
 
 
         animationTimer.stop();
+        pathTransition.setDuration(Duration.millis(30000*handleSliderChange()));
+        pathTransition.playFromStart();
+
 
         kugel.setCenterY(startposition[0]);
         kugel.setCenterY(startposition[1]);
@@ -282,5 +311,6 @@ public class Controller {
         dragEvent.consume();
         System.out.println("Drag done");
     }
+
 
 }
