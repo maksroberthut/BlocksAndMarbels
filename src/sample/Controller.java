@@ -45,6 +45,8 @@ public class Controller implements Initializable {
 
 
 
+
+
     /**
      * Animation
      */
@@ -69,12 +71,13 @@ public class Controller implements Initializable {
     public double ballStarty;
     public double startposition[];
 
+
     public String imgUrl;
     public int elemNum, x;
 
     private double vel;
     private double gravity = 9.81 / 60;
-
+    private double rotation;
 
     @FXML
     public Slider slider;
@@ -133,6 +136,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem1.png";
+                rotation = element1.getRotate();
 
             }
         });
@@ -141,6 +145,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem2.png";
+                rotation = element2.getRotate();
             }
         });
 
@@ -148,6 +153,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem3.png";
+                rotation = element3.getRotate();
             }
         });
 
@@ -155,6 +161,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem4.png";
+                rotation = element4.getRotate();
             }
         });
 
@@ -162,6 +169,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem5.png";
+                rotation = element5.getRotate();
             }
         });
 
@@ -169,6 +177,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem6.png";
+                rotation = element6.getRotate();
             }
         });
 
@@ -176,6 +185,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem7.png";
+                rotation = element7.getRotate();
             }
         });
 
@@ -183,6 +193,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem8.png";
+                rotation = element8.getRotate();
             }
         });
 
@@ -190,6 +201,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem9.png";
+                rotation = element9.getRotate();
             }
         });
 
@@ -197,17 +209,14 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem10.png";
-
-
-
-
+                rotation = element10.getRotate();
 
 
             }
         });
 
 
-        element1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        element1.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 element1.setRotate(element1.getRotate() + 90);
@@ -372,7 +381,7 @@ public class Controller implements Initializable {
 
         /* drag was detected, start a drag-and-drop gesture*/
         /* allow any transfer mode */
-        Dragboard db = element1.startDragAndDrop(TransferMode.MOVE);
+        Dragboard db = element2.startDragAndDrop(TransferMode.MOVE);
         //    Dragboard db2 = element2.startDragAndDrop(TransferMode.MOVE);
 
         /* Put a string on a dragboard */
@@ -382,7 +391,7 @@ public class Controller implements Initializable {
         //   db2.setContent(content);
         SnapshotParameters param = new SnapshotParameters();
         param.setFill(Color.TRANSPARENT);
-        db.setDragView(element1.snapshot(param, null));
+        db.setDragView(element2.snapshot(param, null));
         //     db2.setDragView(element2.snapshot(param, null));
 
         mouseEvent.consume();
@@ -449,6 +458,8 @@ public class Controller implements Initializable {
 
                 Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
                 c.setFill(new ImagePattern(new Image(imgUrl)));
+                c.setRotate(rotation);
+
 
 
                 if (dragEvent.getTarget() instanceof Pane) {
