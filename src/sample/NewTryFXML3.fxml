@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
@@ -17,285 +24,296 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="canvas" alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="/sample/NewTryCss.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-          <Pane prefHeight="633.0" prefWidth="705.0">
-      <children>
-         <Text layoutX="227.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blocks'n'Marbles">
-            <font>
-               <Font name="Antonio Regular" size="58.0" />
-            </font>
-         </Text>
-      </children></Pane>
-    <Pane prefHeight="817.0" prefWidth="780.0" GridPane.rowIndex="1">
-        <children>
-            <TabPane fx:id="tapPane" layoutX="24.0" layoutY="61.0" prefHeight="720.0" prefWidth="744.0" side="LEFT" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE">
-                <tabs>
-                    <Tab text="Ebene 1">
-                  <content>
-                     <Pane fx:id="targetEbene1" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
-                        <children>
-                           <GridPane layoutX="1.0" layoutY="9.0" prefHeight="702.0" prefWidth="696.0" visible="false">
-                             <columnConstraints>
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              
-                                                                    
-                             </columnConstraints>
-                             <rowConstraints>
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                             </rowConstraints>
-                           </GridPane>
-                                    <Circle fx:id="kugel" centerX="50.0" centerY="50.0" radius="10" />
-                           <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
-                              <image>
-                                 <Image url="@../resource/Gitter.png" />
-                              </image>
-                           </ImageView>
-                           <ImageView fitHeight="562.0" fitWidth="353.0" layoutX="145.0" layoutY="80.0">
-                              <image>
-                                 <Image url="@../resource/Ebene1.png" />
-                              </image>
-                           </ImageView>
-                        </children></Pane>
-                  </content></Tab>
-                    <Tab text="Ebene 2">
-                        <content>
-                            <Pane fx:id="target" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
-                        <children>
-                           <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
-                              <image>
-                                 <Image url="@../resource/Gitter.png" />
-                              </image>
-                           </ImageView>
-                           <ImageView fitHeight="562.0" fitWidth="351.0" layoutX="145.0" layoutY="80.0">
-                              <image>
-                                 <Image url="@../resource/Ebene2.png" />
-                              </image>
-                           </ImageView>
-                        </children></Pane>
-                        </content>
-                    </Tab>
-                    <Tab text="Ebene 3">
-                        <content>
-                            <Pane prefHeight="200.0" prefWidth="200.0">
-                                <children>
-                                    <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
-                                        <image>
-                                            <Image url="@../resource/Gitter.png" />
-                                        </image>
-                                    </ImageView>
-                           <ImageView fitHeight="494.0" fitWidth="351.0" layoutX="145.0" layoutY="149.0">
-                              <image>
-                                 <Image url="@../resource/Ebene3.png" />
-                              </image>
-                           </ImageView>
-                                </children></Pane>
-                        </content>
-                    </Tab>
-                    <Tab text="Ebene 4">
-                        <content>
-                            <Pane prefHeight="200.0" prefWidth="200.0">
-                                <children>
-                                    <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
-                                        <image>
-                                            <Image url="@../resource/Gitter.png" />
-                                        </image>
-                                    </ImageView>
-                           <ImageView fitHeight="213.0" fitWidth="284.0" layoutX="144.0" layoutY="428.0">
-                              <image>
-                                 <Image url="@../resource/Ebene4.png" />
-                              </image>
-                           </ImageView>
-                                </children></Pane>
-                        </content>
-                    </Tab>
-                    <Tab text="Ebene 5">
-                        <content>
-                            <Pane prefHeight="200.0" prefWidth="200.0">
-                                <children>
-                                    <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
-                                        <image>
-                                            <Image url="@../resource/Gitter.png" />
-                                        </image>
-                                    </ImageView>
-                           <ImageView fitHeight="213.0" fitWidth="214.0" layoutX="145.0" layoutY="430.0">
-                              <image>
-                                 <Image url="@../resource/Ebene5.png" />
-                              </image>
-                           </ImageView>
-                                </children></Pane>
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
-        </children>
-    </Pane>
-   <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <children>
-         <Pane prefHeight="548.0" prefWidth="390.0">
+<GridPane fx:id="canvas" alignment="center" hgap="10" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="/sample/NewTryCss.css" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <Pane prefHeight="633.0" prefWidth="705.0">
             <children>
-               <Rectangle fx:id="element1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="76.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem1.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle fx:id="element2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="76.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem2.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="266.0" layoutY="76.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem3.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="193.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem4.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="193.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem5.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="266.0" layoutY="193.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem6.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="311.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem7.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="311.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem8.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="429.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem9.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="429.0" stroke="BLACK" strokeType="INSIDE" width="72.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="@../resource/Elem10.png" />
-                        </source>
-                     </ImageInput>
-                  </effect>
-               </Rectangle>
-            </children></Pane>
-         <Pane prefHeight="252.0" prefWidth="390.0">
-            <children>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="95.0" layoutY="116.0" onMouseClicked="#startAnimation">
-                  <image>
-                     <Image url="@../resource/Play.png" />
-                  </image>
-               </ImageView>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="116.0" onMouseClicked="#stopAnimation">
-                  <image>
-                     <Image url="@../resource/Pause.png" />
-                  </image>
-               </ImageView>
-               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="116.0" onMouseClicked="#resetAnimation">
-                  <image>
-                     <Image url="@../resource/Reset.png" />
-                  </image>
-               </ImageView>
-                    <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="186.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
-               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="126.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" width="41.0">
-                  <effect>
-                     <ImageInput>
-                        <source>
-                           <Image url="file:/C:/Users/Rumeysa/IdeaProjects/Blocks/src/resource/Muell.png" />
-                        </source>
-                     </ImageInput>
-                  </effect></Rectangle>
+                <Text layoutX="227.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blocks'n'Marbles">
+                    <font>
+                        <Font name="Antonio Regular" size="58.0" />
+                    </font>
+                </Text>
             </children>
-         </Pane>
-      </children>
-   </VBox>
-   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-      <children>
-            <Text layoutX="290.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MIN" wrappingWidth="88.681640625">
-                <font>
-                    <Font name="Antonio Regular" size="46.0" />
-                </font>
-            </Text>
-            <Text layoutX="78.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KM/H" wrappingWidth="134.681640625">
-                <font>
-                    <Font name="Antonio Regular" size="46.0" />
-                </font>
-            </Text>
-            <Label fx:id="VelocityLabel" layoutX="-30" layoutY="82.0" textFill="#ae3839">
-                <font>
-                    <Font name="Antonio Regular" size="46.0" />
-                </font>
-            </Label>
-            <Label layoutX="220.0" layoutY="83.0" text="126" textFill="#ae3839">
-                <font>
-                    <Font name="Antonio Regular" size="46.0" />
-                </font>
-            </Label>
-      </children>
-   </Pane>
+        </Pane>
+        <Pane prefHeight="817.0" prefWidth="780.0" GridPane.rowIndex="1">
+            <children>
+                <TabPane fx:id="tapPane" layoutX="24.0" layoutY="61.0" prefHeight="720.0" prefWidth="744.0" side="LEFT" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Ebene 1">
+                            <content>
+                                <Pane fx:id="targetEbene1" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <GridPane layoutX="1.0" layoutY="9.0" prefHeight="702.0" prefWidth="696.0" visible="false">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+
+
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                        </GridPane>
+                                        <Circle fx:id="kugel" centerX="50.0" centerY="50.0" radius="10" />
+                                        <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
+                                            <image>
+                                                <Image url="@../resource/Gitter.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="562.0" fitWidth="353.0" layoutX="145.0" layoutY="80.0">
+                                            <image>
+                                                <Image url="@../resource/Ebene1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                        <Tab text="Ebene 2">
+                            <content>
+                                <Pane fx:id="target" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
+                                            <image>
+                                                <Image url="@../resource/Gitter.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="562.0" fitWidth="351.0" layoutX="145.0" layoutY="80.0">
+                                            <image>
+                                                <Image url="@../resource/Ebene2.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                        <Tab text="Ebene 3">
+                            <content>
+                                <Pane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
+                                            <image>
+                                                <Image url="@../resource/Gitter.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="494.0" fitWidth="351.0" layoutX="145.0" layoutY="149.0">
+                                            <image>
+                                                <Image url="@../resource/Ebene3.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                        <Tab text="Ebene 4">
+                            <content>
+                                <Pane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
+                                            <image>
+                                                <Image url="@../resource/Gitter.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="213.0" fitWidth="284.0" layoutX="144.0" layoutY="428.0">
+                                            <image>
+                                                <Image url="@../resource/Ebene4.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                        <Tab text="Ebene 5">
+                            <content>
+                                <Pane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
+                                            <image>
+                                                <Image url="@../resource/Gitter.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="213.0" fitWidth="214.0" layoutX="145.0" layoutY="430.0">
+                                            <image>
+                                                <Image url="@../resource/Ebene5.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </children>
+        </Pane>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <Pane fx:id="elemPane" prefHeight="548.0" prefWidth="390.0">
+                    <children>
+                        <Rectangle fx:id="element1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="76.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem1.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="76.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem2.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="266.0" layoutY="76.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem3.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="193.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem4.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element5" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="193.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem5.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element6" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="266.0" layoutY="193.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem6.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element7" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="311.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem7.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element8" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="311.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem8.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element9" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="39.0" layoutY="429.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem9.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                        <Rectangle fx:id="element10" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" layoutX="154.0" layoutY="429.0" onDragDetected="#drag" onDragDone="#dragDone" stroke="BLACK" strokeType="INSIDE" width="72.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="@../resource/Elem10.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                    </children>
+                </Pane>
+                <Pane prefHeight="252.0" prefWidth="390.0">
+                    <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="95.0" layoutY="116.0" onMouseClicked="#startAnimation">
+                            <image>
+                                <Image url="@../resource/Play.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="161.0" layoutY="116.0" onMouseClicked="#stopAnimation">
+                            <image>
+                                <Image url="@../resource/Pause.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="116.0" onMouseClicked="#resetAnimation">
+                            <image>
+                                <Image url="@../resource/Reset.png" />
+                            </image>
+                        </ImageView>
+                        <Slider fx:id="slider" blockIncrement="0.1" layoutX="95.0" layoutY="186.0" majorTickUnit="0.1" max="1.0" onMouseDragged="#handleSliderChange" prefHeight="17.0" prefWidth="198.0" showTickMarks="true" value="0.1" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="55.0" layoutX="166.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="40.0">
+                            <effect>
+                                <ImageInput>
+                                    <source>
+                                        <Image url="file:/D:/Semester%202&amp;4/Visual%20Computing%202/01_Kugelbahn/Blocks/src/resource/Muell.png" />
+                                    </source>
+                                </ImageInput>
+                            </effect>
+                        </Rectangle>
+                    </children>
+                </Pane>
+            </children>
+        </VBox>
+        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <children>
+                <Text layoutX="290.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MIN" wrappingWidth="88.681640625">
+                    <font>
+                        <Font name="Antonio Regular" size="46.0" />
+                    </font>
+                </Text>
+                <Text layoutX="78.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KM/H" wrappingWidth="134.681640625">
+                    <font>
+                        <Font name="Antonio Regular" size="46.0" />
+                    </font>
+                </Text>
+                <Label fx:id="VelocityLabel" layoutX="-30" layoutY="82.0" textFill="#ae3839">
+                    <font>
+                        <Font name="Antonio Regular" size="46.0" />
+                    </font>
+                </Label>
+                <Label layoutX="213.0" layoutY="85.0" text="126" textFill="#ae3839">
+                    <font>
+                        <Font name="Antonio Regular" size="46.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
 
 
 
@@ -305,7 +323,7 @@
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints minWidth="10.0" prefWidth="400.0" />
-      <ColumnConstraints />
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="204.0" minHeight="121.0" prefHeight="173.0" />
