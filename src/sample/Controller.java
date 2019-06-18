@@ -90,13 +90,6 @@ public class Controller implements Initializable {
         return sliderValue;
     }
 
-    /**
-     * Defining the path that the Ball travels on loading of the xml document
-     * Using the pathtransition function to animate the ball through the track
-     * //Todo Making this more modular and applying it not to one but more Layers that switch automatically
-     * @param location
-     * @param resources
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -119,8 +112,6 @@ public class Controller implements Initializable {
 
     /**
      * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
-     * Setting the playback speed of the animation here by multiplying the slidervalue with the duration of the animation making it
-     * shorter or longer and by that the animation faster or slower
      * @autor Maksymilian Huytra
      */
     @FXML
@@ -152,11 +143,6 @@ public class Controller implements Initializable {
         pathTransition.pause();
 
     }
-
-    /**
-     * Function for reseting the animation
-     *
-     */
     @FXML
     public void resetAnimation(){
 
