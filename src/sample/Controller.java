@@ -1,36 +1,23 @@
 package sample;
 
 import javafx.animation.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TabPane;
-import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -42,9 +29,7 @@ public class Controller implements Initializable {
     public Pane target, targetEbene1, elemPane;
     @FXML
     public Rectangle element1, element2, element3, element4, element5, element6, element7, element8, element9, element10;
-
-
-
+    public Pane loeschElement;
 
 
     /**
@@ -119,19 +104,9 @@ public class Controller implements Initializable {
         pathTransition.setAutoReverse(false);
 
 
-        /**
-         elemNum = elemPane.getChildren().size();
-         for(x = 0; x < elemNum; x++) {
-         elemPane.getChildren().get(x).setOnMouseEntered(new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-        imgUrl = "/resource/Elem" + x + ".png";
-        }
-        });
-         }
-         **/
 
 
+        /* Methoden für Rotation der Elemente fangen hier an */
         element1.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -141,21 +116,6 @@ public class Controller implements Initializable {
             }
         });
 
-        element2.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem2.png";
-                rotation = element2.getRotate();
-            }
-        });
-
-        element3.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem3.png";
-                rotation = element3.getRotate();
-            }
-        });
 
         element4.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -170,14 +130,6 @@ public class Controller implements Initializable {
             public void handle(MouseEvent event) {
                 imgUrl = "/resource/Elem5.png";
                 rotation = element5.getRotate();
-            }
-        });
-
-        element6.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem6.png";
-                rotation = element6.getRotate();
             }
         });
 
@@ -284,13 +236,6 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
-
-
-
-
     /**
      * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
      *
@@ -309,7 +254,6 @@ public class Controller implements Initializable {
         startposition = new double[]{ballStartX, ballStarty};
 
         animationTimer.start();
-
 
         return startposition;
 
@@ -346,7 +290,6 @@ public class Controller implements Initializable {
 
 
 
-
     @FXML
     public double moveBall() {
         double sliderValue = handleSliderChange();
@@ -371,31 +314,25 @@ public class Controller implements Initializable {
     }
 
 
+
+
     /* Drag and Drop Methoden fangen hier an */
-
-
     @FXML
     public void drag(MouseEvent mouseEvent) {
 
-
-
         /* drag was detected, start a drag-and-drop gesture*/
         /* allow any transfer mode */
-        Dragboard db = element2.startDragAndDrop(TransferMode.MOVE);
-        //    Dragboard db2 = element2.startDragAndDrop(TransferMode.MOVE);
+        Dragboard db = element3.startDragAndDrop(TransferMode.MOVE);
 
         /* Put a string on a dragboard */
         ClipboardContent content = new ClipboardContent();
         content.putString("rectangle");
         db.setContent(content);
-        //   db2.setContent(content);
         SnapshotParameters param = new SnapshotParameters();
         param.setFill(Color.TRANSPARENT);
         db.setDragView(element2.snapshot(param, null));
-        //     db2.setDragView(element2.snapshot(param, null));
 
         mouseEvent.consume();
-
 
         System.out.println("Drag detected");
     }
@@ -410,7 +347,7 @@ public class Controller implements Initializable {
                 dragEvent.getDragboard().hasString()) {
             /* allow for moving */
             dragEvent.acceptTransferModes(TransferMode.MOVE);
-//                    target.setStyle("-fx-background-color: silver");
+
         }
 
         dragEvent.consume();
@@ -425,8 +362,6 @@ public class Controller implements Initializable {
         /* show to the user that it is an actual gesture target */
         if (dragEvent.getGestureSource() != target &&
                 dragEvent.getDragboard().hasString()) {
-
-            // target.setStyle("-fx-background-color: silver");
         }
 
         dragEvent.consume();
@@ -437,8 +372,7 @@ public class Controller implements Initializable {
     @FXML
     public void dragExited(DragEvent dragEvent) {
         /* mouse moved away, remove the graphical cues */
-//      target.setFill(Color.BLACK);
-        //  target.setStyle("-fx-background-color: white");
+
         dragEvent.consume();
         System.out.println("Drag exited");
     }
@@ -452,15 +386,15 @@ public class Controller implements Initializable {
 
 
         if (db.hasString()) {
-//                    target.setText(db.getString());
-            if (db.getString().equals("rectangle")) {
 
+            if (db.getString().equals("rectangle")) {
 
                 Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
                 c.setFill(new ImagePattern(new Image(imgUrl)));
                 c.setRotate(rotation);
 
-
+                List<Rectangle> list = new ArrayList<>();
+                list.add(c);
 
                 if (dragEvent.getTarget() instanceof Pane) {
                     Pane targetPane = (Pane) dragEvent.getTarget();
@@ -473,23 +407,10 @@ public class Controller implements Initializable {
                 dragEvent.consume();
                 System.out.println("Drag Dropped");
             }
-            /* let the source know whether the string was successfully
-             * transferred and used */
-            ;
-
-
 
         }
 
-
-
-
     }
-
-
-
-
-
 
     @FXML
     public void dragDone(DragEvent dragEvent) {
@@ -501,15 +422,85 @@ public class Controller implements Initializable {
 //                }
         dragEvent.consume();
         System.out.println("Drag done");
-
-
-
     }
 
 
 
 
+    /*Delete Methoden fangen hier an*/
 
+
+
+    public void loeschDrop(DragEvent dragEvent) {
+
+        /* data dropped */
+        /* if there is a string data on dragboard, read it and use it */
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+
+
+        if (db.hasString()) {
+
+            if (db.getString().equals("rectangle")) {
+
+                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
+                c.setFill(new ImagePattern(new Image(imgUrl)));
+                c.setRotate(rotation);
+
+                if (dragEvent.getTarget() instanceof Pane) {
+                    Pane loeschElement = (Pane) dragEvent.getTarget();
+                    loeschElement.getChildren().remove(c);
+
+                }
+                success = true;
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();
+                System.out.println("Drag Dropped");
+            }
+
+        }
+
+    }
+
+    public void loeschEntered(DragEvent dragEvent) {
+
+        /* the drag-and-drop gesture entered the target */
+        /* show to the user that it is an actual gesture target */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag entered");
+
+    }
+
+    public void loeschOver(DragEvent dragEvent) {
+
+        /* data is dragged over the target */
+        /* accept it only if it is not dragged from the same node
+         * and if it has a string data */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+            /* allow for moving */
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag over");
+
+    }
+
+    public void loeschExited(DragEvent dragEvent) {
+
+        /* mouse moved away, remove the graphical cues */
+
+        dragEvent.consume();
+        System.out.println("Drag exited");
+        
+    }
 }
 
 
