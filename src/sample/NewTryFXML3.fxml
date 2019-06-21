@@ -304,12 +304,12 @@
                         <Font name="Antonio Regular" size="46.0" />
                     </font>
                 </Text>
-                <Label fx:id="VelocityLabel" layoutX="-30" layoutY="82.0" textFill="#ae3839">
+                <Label fx:id="VelocityLabel" layoutX="5.0" layoutY="82.0" prefHeight="68.0" prefWidth="72.0" text="0" textAlignment="RIGHT" textFill="#ae3839">
                     <font>
                         <Font name="Antonio Regular" size="46.0" />
                     </font>
                 </Label>
-                <Label layoutX="213.0" layoutY="85.0" text="126" textFill="#ae3839">
+                <Label layoutX="225.0" layoutY="85.0" prefHeight="68.0" prefWidth="65.0" text="126" textFill="#ae3839">
                     <font>
                         <Font name="Antonio Regular" size="46.0" />
                     </font>

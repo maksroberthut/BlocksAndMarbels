@@ -429,8 +429,6 @@ public class Controller implements Initializable {
 
     /*Delete Methoden fangen hier an*/
 
-
-
     public void loeschDrop(DragEvent dragEvent) {
 
         /* data dropped */
@@ -501,6 +499,8 @@ public class Controller implements Initializable {
         System.out.println("Drag exited");
         
     }
+
+
 }
 
 
