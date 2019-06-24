@@ -29,7 +29,10 @@ public class Controller implements Initializable {
     public Pane target, targetEbene1, elemPane;
     @FXML
     public Rectangle element1, element2, element3, element4, element5, element6, element7, element8, element9, element10;
+    @FXML
     public Pane loeschElement;
+
+
 
 
     /**
@@ -392,6 +395,36 @@ public class Controller implements Initializable {
                 Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
                 c.setFill(new ImagePattern(new Image(imgUrl)));
                 c.setRotate(rotation);
+                c.setOnDragDetected(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        // sollte erst beim drop passieren
+                        Object c = event.getSource();
+                        targetEbene1.getChildren().remove(c);
+
+                        Dragboard db = element3.startDragAndDrop(TransferMode.MOVE);
+
+                        /* Put a string on a dragboard */
+                        ClipboardContent content = new ClipboardContent();
+                        content.putString("rectangle");
+                        db.setContent(content);
+                        SnapshotParameters param = new SnapshotParameters();
+                        param.setFill(Color.TRANSPARENT);
+                        db.setDragView(element2.snapshot(param, null));
+
+                       event.consume();
+
+                        System.out.println("Drag detected");
+                    }
+                });
+                c.setOnDragDropped(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent event) {
+
+                    }
+                });
+
+
 
                 List<Rectangle> list = new ArrayList<>();
                 list.add(c);
