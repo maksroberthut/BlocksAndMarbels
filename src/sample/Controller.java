@@ -1,6 +1,5 @@
 package sample;
 
-import Elements.Ball;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,10 +15,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,13 +40,9 @@ public class Controller implements Initializable {
         public void handle(long now) {
             //moveBall();
             //vel = moveBall();
-            //double roundVel = Math.ceil(vel);
-            //String velstring = Double.toString(roundVel);
-            //VelocityLabel.setText(velstring);
-            double[] startPosition = castBall.getCurrentPosition();
-
-            System.out.println(Arrays.toString(startPosition));
-
+            double roundVel = Math.ceil(vel);
+            String velstring = Double.toString(roundVel);
+            VelocityLabel.setText(velstring);
 
         }
     };
@@ -57,9 +50,8 @@ public class Controller implements Initializable {
     Path path = new Path();
     PathTransition pathTransition = new PathTransition();
 
-    public Circle kugel = new Ball();
-    public Ball castBall = ((Ball)kugel);
-    public double newX, newY;
+    public Circle kugel;
+    private double newX, newY;
     public double ballStartX;
     public double ballStarty;
     public double startposition[];
@@ -93,273 +85,10 @@ public class Controller implements Initializable {
         return sliderValue;
     }
 
-
-
-
-    /**
-     * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
-     *
-     * @autor Maksymilian Huytra
-     */
-    @FXML
-    public double[] startAnimation() {
-        ballStartX = kugel.getCenterX();
-        ballStarty = kugel.getCenterY();
-
-        startposition = new double[]{ballStartX, ballStarty};
-
-        animationTimer.start();
-
-        return startposition;
-
-    }
-
-    /**
-     * Methode for stopping  the animation
-     *
-     * @autor Maksymilian Hutyra
-     */
-    @FXML
-    public void stopAnimation() {
-        animationTimer.stop();
-        pathTransition.pause();
-
-    }
-
-    @FXML
-    public void resetAnimation() {
-
-
-        animationTimer.stop();
-
-
-        kugel.setCenterY(startposition[0]);
-        kugel.setCenterY(startposition[1]);
-
-        vel = 0;
-
-
-    }
-
-
-
-    @FXML public double moveBall() {
-        double sliderValue = handleSliderChange();
-        double newVelosity;
-        // formel für die geschwindigkeit
-        vel = vel + gravity;
-        newVelosity = vel * sliderValue;
-
-
-        //kugel soll für jeden Frame eine neue Position annehmen
-        newX = kugel.getCenterX();
-        newY = kugel.getCenterY() + vel;
-
-
-
-        kugel.setCenterX(newX);
-        kugel.setCenterY(newY);
-
-        System.out.println("geschw: " + newVelosity);
-
-        return newVelosity;
-
-
-    }
-
-
-
-
-    /* Drag and Drop Methoden fangen hier an */
-    @FXML
-    public void drag(MouseEvent mouseEvent) {
-
-        /* drag was detected, start a drag-and-drop gesture*/
-        /* allow any transfer mode */
-        Dragboard db = element3.startDragAndDrop(TransferMode.MOVE);
-
-        /* Put a string on a dragboard */
-        ClipboardContent content = new ClipboardContent();
-        content.putString("rectangle");
-        db.setContent(content);
-        SnapshotParameters param = new SnapshotParameters();
-        param.setFill(Color.TRANSPARENT);
-        db.setDragView(element2.snapshot(param, null));
-
-        mouseEvent.consume();
-
-        System.out.println("Drag detected");
-    }
-
-    @FXML
-    public void dragOver(DragEvent dragEvent) {
-
-        /* data is dragged over the target */
-        /* accept it only if it is not dragged from the same node
-         * and if it has a string data */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-            /* allow for moving */
-            dragEvent.acceptTransferModes(TransferMode.MOVE);
-
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag over");
-    }
-
-
-    @FXML
-    public void dragEntered(DragEvent dragEvent) {
-
-        /* the drag-and-drop gesture entered the target */
-        /* show to the user that it is an actual gesture target */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag entered");
-    }
-
-
-    @FXML
-    public void dragExited(DragEvent dragEvent) {
-        /* mouse moved away, remove the graphical cues */
-
-        dragEvent.consume();
-        System.out.println("Drag exited");
-    }
-
-    @FXML
-    public void dragDropped(DragEvent dragEvent) {
-        /* data dropped */
-        /* if there is a string data on dragboard, read it and use it */
-        Dragboard db = dragEvent.getDragboard();
-        boolean success = false;
-
-
-        if (db.hasString()) {
-
-            if (db.getString().equals("rectangle")) {
-
-                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                c.setFill(new ImagePattern(new Image(imgUrl)));
-                c.setRotate(rotation);
-
-                List<Rectangle> list = new ArrayList<>();
-                list.add(c);
-
-                if (dragEvent.getTarget() instanceof Pane) {
-                    Pane targetPane = (Pane) dragEvent.getTarget();
-                    targetPane.getChildren().add(c);
-
-                }
-                success = true;
-                dragEvent.setDropCompleted(success);
-
-                dragEvent.consume();
-                System.out.println("Drag Dropped");
-            }
-
-        }
-
-    }
-
-    @FXML
-    public void dragDone(DragEvent dragEvent) {
-        /* the drag and drop gesture ended */
-        /* if the data was successfully moved, clear it */
-//                if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-//
-//                    elementNeu.setRadius(10);
-//                }
-        dragEvent.consume();
-        System.out.println("Drag done");
-    }
-
-
-
-
-    /*Delete Methoden fangen hier an*/
-
-
-
-    public void loeschDrop(DragEvent dragEvent) {
-
-
-        /* data dropped */
-        /* if there is a string data on dragboard, read it and use it */
-        Dragboard db = dragEvent.getDragboard();
-        boolean success = false;
-
-
-        if (db.hasString()) {
-
-            if (db.getString().equals("rectangle")) {
-
-                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                c.setFill(new ImagePattern(new Image(imgUrl)));
-                c.setRotate(rotation);
-
-                if (dragEvent.getTarget() instanceof Pane) {
-                    Pane loeschElement = (Pane) dragEvent.getTarget();
-                    loeschElement.getChildren().remove(c);
-
-                }
-                success = true;
-                dragEvent.setDropCompleted(success);
-
-                dragEvent.consume();
-                System.out.println("Drag Dropped");
-            }
-
-        }
-
-    }
-
-    public void loeschEntered(DragEvent dragEvent) {
-
-        /* the drag-and-drop gesture entered the target */
-        /* show to the user that it is an actual gesture target */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag entered");
-
-    }
-
-    public void loeschOver(DragEvent dragEvent) {
-
-        /* data is dragged over the target */
-        /* accept it only if it is not dragged from the same node
-         * and if it has a string data */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-            /* allow for moving */
-            dragEvent.acceptTransferModes(TransferMode.MOVE);
-
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag over");
-
-    }
-
-    public void loeschExited(DragEvent dragEvent) {
-
-        /* mouse moved away, remove the graphical cues */
-
-        dragEvent.consume();
-        System.out.println("Drag exited");
-
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        /**path.getElements().add(new MoveTo(460, 110));
+        path.getElements().add(new MoveTo(460, 110));
         path.getElements().add(new LineTo(460, 300));
         path.getElements().add(new ArcTo(50, 60, -45, 420, 330, false, true));
         path.getElements().add(new ArcTo(50, 60, 45, 390, 350, false, false));
@@ -372,10 +101,10 @@ public class Controller implements Initializable {
         pathTransition.setNode(kugel);
         pathTransition.setCycleCount(1);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setAutoReverse(false);**/
+        pathTransition.setAutoReverse(false);
 
 
-//TODO CODE dupliziert packt das in einen switch case
+
 
         /* Methoden für Rotation der Elemente fangen hier an */
         element1.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -505,6 +234,273 @@ public class Controller implements Initializable {
 
 
     }
+
+
+    /**
+     * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
+     *
+     * @autor Maksymilian Huytra
+     */
+    @FXML
+    public double[] startAnimation() {
+
+
+        ballStartX = kugel.getCenterX();
+        ballStarty = kugel.getCenterY();
+        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
+        pathTransition.setCycleCount(1);
+        pathTransition.play();
+
+        startposition = new double[]{ballStartX, ballStarty};
+
+        animationTimer.start();
+
+        return startposition;
+
+    }
+
+    /**
+     * Methode for stopping  the animation
+     *
+     * @autor Maksymilian Hutyra
+     */
+    @FXML
+    public void stopAnimation() {
+        animationTimer.stop();
+        pathTransition.pause();
+
+    }
+
+    @FXML
+    public void resetAnimation() {
+
+
+        animationTimer.stop();
+        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
+        pathTransition.playFromStart();
+
+
+        kugel.setCenterY(startposition[0]);
+        kugel.setCenterY(startposition[1]);
+
+        vel = 0;
+
+
+    }
+
+
+
+    @FXML
+    public double moveBall() {
+        double sliderValue = handleSliderChange();
+        double newVelosity;
+        // formel für die geschwindigkeit
+        vel = vel + gravity;
+        newVelosity = vel * sliderValue;
+
+
+        //kugel soll für jeden Frame eine neue Position annehmen
+        newX = kugel.getCenterX();
+        newY = kugel.getCenterY() + vel;
+
+        kugel.setCenterX(newX);
+        kugel.setCenterY(newY);
+
+        System.out.println("geschw: " + newVelosity);
+
+        return newVelosity;
+
+
+    }
+
+
+
+
+    /* Drag and Drop Methoden fangen hier an */
+    @FXML
+    public void drag(MouseEvent mouseEvent) {
+
+        /* drag was detected, start a drag-and-drop gesture*/
+        /* allow any transfer mode */
+        Dragboard db = element3.startDragAndDrop(TransferMode.MOVE);
+
+        /* Put a string on a dragboard */
+        ClipboardContent content = new ClipboardContent();
+        content.putString("rectangle");
+        db.setContent(content);
+        SnapshotParameters param = new SnapshotParameters();
+        param.setFill(Color.TRANSPARENT);
+        db.setDragView(element2.snapshot(param, null));
+
+        mouseEvent.consume();
+
+        System.out.println("Drag detected");
+    }
+
+    @FXML
+    public void dragOver(DragEvent dragEvent) {
+
+        /* data is dragged over the target */
+        /* accept it only if it is not dragged from the same node
+         * and if it has a string data */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+            /* allow for moving */
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag over");
+    }
+
+
+    @FXML
+    public void dragEntered(DragEvent dragEvent) {
+
+        /* the drag-and-drop gesture entered the target */
+        /* show to the user that it is an actual gesture target */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag entered");
+    }
+
+
+    @FXML
+    public void dragExited(DragEvent dragEvent) {
+        /* mouse moved away, remove the graphical cues */
+
+        dragEvent.consume();
+        System.out.println("Drag exited");
+    }
+
+    @FXML
+    public void dragDropped(DragEvent dragEvent) {
+        /* data dropped */
+        /* if there is a string data on dragboard, read it and use it */
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+
+
+        if (db.hasString()) {
+
+            if (db.getString().equals("rectangle")) {
+
+                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
+                c.setFill(new ImagePattern(new Image(imgUrl)));
+                c.setRotate(rotation);
+
+                List<Rectangle> list = new ArrayList<>();
+                list.add(c);
+
+                if (dragEvent.getTarget() instanceof Pane) {
+                    Pane targetPane = (Pane) dragEvent.getTarget();
+                    targetPane.getChildren().add(c);
+
+                }
+                success = true;
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();
+                System.out.println("Drag Dropped");
+            }
+
+        }
+
+    }
+
+    @FXML
+    public void dragDone(DragEvent dragEvent) {
+        /* the drag and drop gesture ended */
+        /* if the data was successfully moved, clear it */
+//                if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+//
+//                    elementNeu.setRadius(10);
+//                }
+        dragEvent.consume();
+        System.out.println("Drag done");
+    }
+
+
+
+
+    /*Delete Methoden fangen hier an*/
+
+    public void loeschDrop(DragEvent dragEvent) {
+
+        /* data dropped */
+        /* if there is a string data on dragboard, read it and use it */
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+
+
+        if (db.hasString()) {
+
+            if (db.getString().equals("rectangle")) {
+
+                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
+                c.setFill(new ImagePattern(new Image(imgUrl)));
+                c.setRotate(rotation);
+
+                if (dragEvent.getTarget() instanceof Pane) {
+                    Pane loeschElement = (Pane) dragEvent.getTarget();
+                    loeschElement.getChildren().remove(c);
+
+                }
+                success = true;
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();
+                System.out.println("Drag Dropped");
+            }
+
+        }
+
+    }
+
+    public void loeschEntered(DragEvent dragEvent) {
+
+        /* the drag-and-drop gesture entered the target */
+        /* show to the user that it is an actual gesture target */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag entered");
+
+    }
+
+    public void loeschOver(DragEvent dragEvent) {
+
+        /* data is dragged over the target */
+        /* accept it only if it is not dragged from the same node
+         * and if it has a string data */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+            /* allow for moving */
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag over");
+
+    }
+
+    public void loeschExited(DragEvent dragEvent) {
+
+        /* mouse moved away, remove the graphical cues */
+
+        dragEvent.consume();
+        System.out.println("Drag exited");
+        
+    }
+
+
 }
 
 
