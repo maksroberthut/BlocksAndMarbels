@@ -1,5 +1,6 @@
 package sample;
 
+import Elements.Ball;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,8 +16,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -40,9 +43,13 @@ public class Controller implements Initializable {
         public void handle(long now) {
             //moveBall();
             //vel = moveBall();
-            double roundVel = Math.ceil(vel);
-            String velstring = Double.toString(roundVel);
-            VelocityLabel.setText(velstring);
+            //double roundVel = Math.ceil(vel);
+            //String velstring = Double.toString(roundVel);
+            //VelocityLabel.setText(velstring);
+            double[] startPosition = castBall.getCurrentPosition();
+
+            System.out.println(Arrays.toString(startPosition));
+
 
         }
     };
@@ -50,8 +57,9 @@ public class Controller implements Initializable {
     Path path = new Path();
     PathTransition pathTransition = new PathTransition();
 
-    public Circle kugel;
-    private double newX, newY;
+    public Circle kugel = new Ball();
+    public Ball castBall = ((Ball)kugel);
+    public double newX, newY;
     public double ballStartX;
     public double ballStarty;
     public double startposition[];
@@ -85,155 +93,7 @@ public class Controller implements Initializable {
         return sliderValue;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-        path.getElements().add(new MoveTo(460, 110));
-        path.getElements().add(new LineTo(460, 300));
-        path.getElements().add(new ArcTo(50, 60, -45, 420, 330, false, true));
-        path.getElements().add(new ArcTo(50, 60, 45, 390, 350, false, false));
-        path.getElements().add(new LineTo(390, 500));
-        path.getElements().add(new ArcTo(50, 60, -45, 350, 535, false, true));
-        path.getElements().add(new LineTo(230, 535));
-        path.getElements().add(new ArcTo(40, 40, 340, 250, 520, true, true));
-        path.getElements().add(new LineTo(250, 600));
-        pathTransition.setPath(path);
-        pathTransition.setNode(kugel);
-        pathTransition.setCycleCount(1);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setAutoReverse(false);
-
-
-
-
-        /* Methoden für Rotation der Elemente fangen hier an */
-        element1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem1.png";
-                rotation = element1.getRotate();
-
-            }
-        });
-
-
-        element4.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem4.png";
-                rotation = element4.getRotate();
-            }
-        });
-
-        element5.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem5.png";
-                rotation = element5.getRotate();
-            }
-        });
-
-        element7.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem7.png";
-                rotation = element7.getRotate();
-            }
-        });
-
-        element8.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem8.png";
-                rotation = element8.getRotate();
-            }
-        });
-
-        element9.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem9.png";
-                rotation = element9.getRotate();
-            }
-        });
-
-        element10.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                imgUrl = "/resource/Elem10.png";
-                rotation = element10.getRotate();
-
-
-            }
-        });
-
-
-        element1.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element1.setRotate(element1.getRotate() + 90);
-
-
-            }
-        });
-
-        element4.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element4.setRotate(element4.getRotate() + 90);
-
-
-            }
-        });
-
-        element5.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element5.setRotate(element5.getRotate() + 90);
-
-
-            }
-        });
-
-        element7.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element7.setRotate(element7.getRotate() + 90);
-
-
-            }
-        });
-
-        element8.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element8.setRotate(element8.getRotate() + 90);
-
-
-            }
-        });
-
-        element9.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element9.setRotate(element9.getRotate() + 90);
-
-
-            }
-        });
-
-        element10.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                element10.setRotate(element10.getRotate() + 90);
-
-
-            }
-        });
-
-
-
-    }
 
 
     /**
@@ -243,13 +103,8 @@ public class Controller implements Initializable {
      */
     @FXML
     public double[] startAnimation() {
-
-
         ballStartX = kugel.getCenterX();
         ballStarty = kugel.getCenterY();
-        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
-        pathTransition.setCycleCount(1);
-        pathTransition.play();
 
         startposition = new double[]{ballStartX, ballStarty};
 
@@ -276,8 +131,6 @@ public class Controller implements Initializable {
 
 
         animationTimer.stop();
-        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
-        pathTransition.playFromStart();
 
 
         kugel.setCenterY(startposition[0]);
@@ -290,8 +143,7 @@ public class Controller implements Initializable {
 
 
 
-    @FXML
-    public double moveBall() {
+    @FXML public double moveBall() {
         double sliderValue = handleSliderChange();
         double newVelosity;
         // formel für die geschwindigkeit
@@ -302,6 +154,8 @@ public class Controller implements Initializable {
         //kugel soll für jeden Frame eine neue Position annehmen
         newX = kugel.getCenterX();
         newY = kugel.getCenterY() + vel;
+
+
 
         kugel.setCenterX(newX);
         kugel.setCenterY(newY);
@@ -433,6 +287,7 @@ public class Controller implements Initializable {
 
     public void loeschDrop(DragEvent dragEvent) {
 
+
         /* data dropped */
         /* if there is a string data on dragboard, read it and use it */
         Dragboard db = dragEvent.getDragboard();
@@ -499,7 +354,156 @@ public class Controller implements Initializable {
 
         dragEvent.consume();
         System.out.println("Drag exited");
-        
+
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        /**path.getElements().add(new MoveTo(460, 110));
+        path.getElements().add(new LineTo(460, 300));
+        path.getElements().add(new ArcTo(50, 60, -45, 420, 330, false, true));
+        path.getElements().add(new ArcTo(50, 60, 45, 390, 350, false, false));
+        path.getElements().add(new LineTo(390, 500));
+        path.getElements().add(new ArcTo(50, 60, -45, 350, 535, false, true));
+        path.getElements().add(new LineTo(230, 535));
+        path.getElements().add(new ArcTo(40, 40, 340, 250, 520, true, true));
+        path.getElements().add(new LineTo(250, 600));
+        pathTransition.setPath(path);
+        pathTransition.setNode(kugel);
+        pathTransition.setCycleCount(1);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setAutoReverse(false);**/
+
+
+//TODO CODE dupliziert packt das in einen switch case
+
+        /* Methoden für Rotation der Elemente fangen hier an */
+        element1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem1.png";
+                rotation = element1.getRotate();
+
+            }
+        });
+
+
+        element4.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem4.png";
+                rotation = element4.getRotate();
+            }
+        });
+
+        element5.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem5.png";
+                rotation = element5.getRotate();
+            }
+        });
+
+        element7.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem7.png";
+                rotation = element7.getRotate();
+            }
+        });
+
+        element8.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem8.png";
+                rotation = element8.getRotate();
+            }
+        });
+
+        element9.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem9.png";
+                rotation = element9.getRotate();
+            }
+        });
+
+        element10.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgUrl = "/resource/Elem10.png";
+                rotation = element10.getRotate();
+
+
+            }
+        });
+
+
+        element1.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element1.setRotate(element1.getRotate() + 90);
+
+
+            }
+        });
+
+        element4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element4.setRotate(element4.getRotate() + 90);
+
+
+            }
+        });
+
+        element5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element5.setRotate(element5.getRotate() + 90);
+
+
+            }
+        });
+
+        element7.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element7.setRotate(element7.getRotate() + 90);
+
+
+            }
+        });
+
+        element8.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element8.setRotate(element8.getRotate() + 90);
+
+
+            }
+        });
+
+        element9.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element9.setRotate(element9.getRotate() + 90);
+
+
+            }
+        });
+
+        element10.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                element10.setRotate(element10.getRotate() + 90);
+
+
+            }
+        });
+
+
+
     }
 }
 

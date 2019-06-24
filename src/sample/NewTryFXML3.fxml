@@ -64,7 +64,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                         </GridPane>
-                                        <Circle fx:id="kugel" centerX="50.0" centerY="50.0" radius="10" />
+                                        <Circle fx:id="ball" centerX="50.0" centerY="50.0" radius="10" />
                                         <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
                                             <image>
                                                 <Image url="@../resource/Gitter.png" />
