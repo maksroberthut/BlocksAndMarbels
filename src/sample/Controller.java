@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
@@ -23,15 +25,21 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    /* private timestepping; um auf timestepping zu greifen*/
 
 
     @FXML
-    public Pane target, targetEbene1, elemPane;
+    public Pane target, targetEbene1;
     @FXML
-    public Rectangle element1, element2, element3, element4, element5, element6, element7, element8, element9, element10;
+    public Rectangle element1, element2, element3, element4, element5, element6, element7, element8, element9, element10, hatch1, hatch2;
+    @FXML
     public Pane loeschElement;
+    @FXML
+    public Tab ebene1,ebene2, ebene3,ebene4,ebene5;
+    @FXML
+    public TabPane tapPane;
 
-
+    int counterTest=0;
     /**
      * Animation
      */
@@ -43,9 +51,49 @@ public class Controller implements Initializable {
             double roundVel = Math.ceil(vel);
             String velstring = Double.toString(roundVel);
             VelocityLabel.setText(velstring);
+            counterTest++;
+            if(counterTest%100==0){
+                updateEbene();
+
+
+            }
 
         }
     };
+
+
+    /*  Ebenenwechsel Methoden ab hier
+    * */
+    public void setHatchLayerIdentification(Rectangle hatch ){
+        hatch.setStrokeDashOffset(0.001);
+
+    }
+    public void updateEbene(){
+        System.out.println("kugelLayoutX: "+kugel.getCenterX());
+
+        System.out.println("kugelX: "+pathTransition.getNode().getTranslateX());
+
+        if(kugel.getCenterX()>(hatch2.getLayoutX()+15) &&  kugel.getCenterX()>(hatch2.getLayoutX()-15) ) {
+            System.out.println("Erstes if erreicht");
+            if (kugel.getCenterY() > (hatch2.getLayoutY() + 15) && kugel.getCenterY() > (hatch2.getLayoutY() - 15)) {
+                System.out.println("Zweites if erreicht");
+                setEineEbeneHinunter();
+            }
+        }
+    }
+
+    public void changeEbeneTo(Tab ebene){
+        //ebene3.isSelected();
+        tapPane.getSelectionModel().select(ebene);
+
+    }
+
+
+    public void setEineEbeneHinunter(){
+        tapPane.getSelectionModel().selectNext();
+    }
+
+
 
     Path path = new Path();
     PathTransition pathTransition = new PathTransition();
@@ -97,8 +145,10 @@ public class Controller implements Initializable {
         path.getElements().add(new LineTo(230, 535));
         path.getElements().add(new ArcTo(40, 40, 340, 250, 520, true, true));
         path.getElements().add(new LineTo(250, 600));
+
         pathTransition.setPath(path);
         pathTransition.setNode(kugel);
+        //pathTransition.getNode().getTranslateX();
         pathTransition.setCycleCount(1);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setAutoReverse(false);
@@ -244,7 +294,7 @@ public class Controller implements Initializable {
     @FXML
     public double[] startAnimation() {
 
-
+       // changeEbene(new Tab());
         ballStartX = kugel.getCenterX();
         ballStarty = kugel.getCenterY();
         pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
