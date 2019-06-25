@@ -9,8 +9,18 @@ import java.time.LocalTime;
 import java.util.Vector;
 
 /**
- * Interface that defines the functions for the physics lopp that gets calculated every Frame
+ * Interface that defines the functions for the physics lo0p that gets calculated every Frame
  * This interface simulates rigid bodies in a constraint motion
+ * -detects Collision
+ * -calculates Distance between Objects
+ * -calculates newPosition of Object
+ * -calculates newVelocity of the Object
+ * -calculates Acceleration
+ * -calculates Kinetic nd potential energy
+ * -calculates elasticShock
+ *
+ *
+ * @Author Maksymiian Hutyra
  */
 public interface Physics {
 
@@ -33,7 +43,8 @@ public interface Physics {
     }
 
     /**
-     * Function to calculate the acceleration in that time frame for one dimension( needs to be called for each dimension
+     * Function to calculate the acceleration in that time frame for one dimension( needs to be
+     * called for each dimension
      * on its own
      * Applied to newtons  Law
      * @param deltaVelocity
@@ -47,19 +58,51 @@ public interface Physics {
     }
 
 
+    /**
+     * Detects if a collision between to objects has happened
+     * depending on the pythagoram
+     * @param
+     * @param
+     * @return
+     */
+    static boolean collisionDetection(Circle ball1,double[] positionBall1, Circle ball2,double[] positionBall2, double radiusSum,double[] vel){
 
-    static boolean collisionDetection(Bounds bounds1, Bounds bounds2){
+        double deltaX = positionBall2[0]-positionBall1[0];
+        double deltaY = positionBall2[1]-positionBall1[1];
+        double deltaZ = positionBall2[2]- positionBall1[2];
 
-        if(bounds1.intersects(bounds2)){
-            return  true;
+        if (Physics.getDistanceBetweenObjects(positionBall1[0],positionBall2[0],positionBall1[1],positionBall2[1])
+                <= radiusSum*radiusSum ){
+
+            return true;
+
+        }else{
+            return false;
         }
+    }
 
 
-        return true;
+
+    /**
+     * Function to calculate the velocity of the object after the collision happend
+     * @param mass1
+     * @param mass2
+     * @param velocity1
+     * @param velocity2
+     * @return
+     */
+    static double calculateElasticShcok(double mass1, double mass2, double velocity1, double velocity2){
+
+        double newVelocityShock = ((mass1*velocity1)+mass2*(2*velocity2-velocity1))/(mass1+mass2);
+        return newVelocityShock;
 
     }
 
-    static double[] resolveCollision(double[] direction ){
+    static double[] resolveCollision(double[] direction,Circle ball1,double[] positionBall1,
+                                                        Shape shape){
+
+
+
 
         return direction;
 
@@ -113,6 +156,12 @@ public interface Physics {
         return kineticEnergy;
     }
 
+    /**
+     * Calculates the potential energy of the object at the given time
+     * @param mass
+     * @param height
+     * @return
+     */
     public static double calculatePotentialEnergy(double mass, double height){
 
         double potentialEnergy = mass*gravity*height;

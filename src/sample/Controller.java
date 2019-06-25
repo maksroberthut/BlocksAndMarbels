@@ -1,12 +1,19 @@
 package sample;
 
+import Elements.Ball;
+import Physicsengine.Physics;
 import javafx.animation.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.BoundingBox;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
@@ -16,9 +23,7 @@ import javafx.scene.shape.*;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class Controller implements Initializable {
@@ -41,11 +46,33 @@ public class Controller implements Initializable {
     AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            //moveBall();
-            //vel = moveBall();
-            double roundVel = Math.ceil(vel);
-            String velstring = Double.toString(roundVel);
-            VelocityLabel.setText(velstring);
+            // Obtaining delta Time by subtracting the time of the start from the tim during the loop
+            double frametime = System.nanoTime();
+            double deltaT = (frametime-startTime)/(3.6*Math.pow(10,12));
+
+            position = Ball.getCurrentPosition(kugel);
+            //System.out.println(deltaT);
+            startTime = frametime;
+            System.out.println(Arrays.toString(position));
+
+             vel= Ball.calculateNewVelocityOfTheBall(kugel,position,deltaT,a);
+
+             position = Ball.calculateNewPosition(kugel,deltaT,vel);
+             Ball.setNewPosition(kugel,position);
+
+
+
+
+
+
+
+            /**if (changeLayer(position,Ball.getCurrentPosition(endpoint))== true){
+                changeLayer(position,Ball.getCurrentPosition(endpoint));
+            }**/
+
+
+
+
 
         }
     };
@@ -53,24 +80,56 @@ public class Controller implements Initializable {
     Path path = new Path();
     PathTransition pathTransition = new PathTransition();
 
+    /**
+     * This is the ball object, where the physical properties of a ball are applied on
+     */
+    @FXML
     public Circle kugel;
+    public BoundingBox kugelBounds;
+    public  Ball castedKugel = ((Ball)kugel);
+
+    int running;
+
+
+
     private double newX, newY;
-    public double ballStartX;
-    public double ballStarty;
-    public double startposition[];
+    private double ballStartX = 460;
+    public double ballStartY = 110;
+    public double[] position;
+    public double[] startPosition = {ballStartX, ballStartY};
+
+    //This time will be determined at the start of the process and the beginning of the physics loops
+    private double startTime;
+
+
+
+
 
 
     public String imgUrl;
     public int elemNum, x;
 
-    private double vel;
-    private double gravity = 9.81 / 60;
+    private double vel[] ={0,1,0};
+    private double gravity = -9.8/60;
+    private double ax,ay;
+    private double a[] = {ax,ay,gravity};
     private double rotation;
 
     @FXML
     public Slider slider;
     @FXML
     public Label VelocityLabel;
+    @FXML
+    //TapPane is the stack of panes
+    public TabPane tapPane;
+    @FXML
+    public Tab ebene1,ebene2,ebene3,ebene4,ebene5;
+    public  Tab Tabs[] = {ebene1,ebene2,ebene3,ebene4,ebene5};
+    @FXML
+    public Circle endpoint;
+
+
+
 
 
     /**
@@ -88,8 +147,221 @@ public class Controller implements Initializable {
         return sliderValue;
     }
 
+
+
+    @FXML
+    public boolean changeLayer(double[] ballPos,double[] endpointPos){
+
+        double radiusSum = kugel.getRadius() + endpoint.getRadius();
+
+        if(Physics.collisionDetection(kugel,ballPos,endpoint,endpointPos,radiusSum,vel) == true){
+
+            tapPane.getSelectionModel().selectNext();
+            Tab curretlyTab = tapPane.getSelectionModel().getSelectedItem();
+
+            return true;
+
+
+
+        }else {
+            return false;
+        }
+
+
+
+
+    }
+
+
+
+
+    /**
+     * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
+     *
+     * @autor Maksymilian Huytra
+     */
+    @FXML
+    public double[] startAnimation() {
+
+        startTime = System.nanoTime();
+        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
+        pathTransition.setCycleCount(1);
+        pathTransition.play();
+
+        position = new double[]{ballStartX, ballStartY};
+
+        animationTimer.start();
+        running = 1;
+
+
+        kugel.setCenterX(ballStartX);
+        kugel.setCenterY(ballStartY);
+
+
+
+        return position;
+
+    }
+
+    /**
+     * Methode for stopping  the animation
+     *
+     * @autor Maksymilian Hutyra
+     */
+    @FXML
+    public void stopAnimation() {
+        animationTimer.stop();
+        running = 0;
+        pathTransition.pause();
+
+    }
+
+    @FXML
+    public void resetAnimation() {
+
+
+        animationTimer.stop();
+        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
+        pathTransition.playFromStart();
+
+
+        kugel.setCenterX(ballStartX);
+        kugel.setCenterY(ballStartY);
+
+
+        vel[0] = 0;
+        vel[1] = 1;
+    }
+
+
+
+
+
+    /**public double moveBall() {
+        double sliderValue = handleSliderChange();
+        double newVelosity;
+        // formel für die geschwindigkeit
+        vel = vel + gravity;
+        newVelosity = vel * sliderValue;
+
+
+        //kugel soll für jeden Frame eine neue Position annehmen
+        newX = kugel.getCenterX();
+        newY = kugel.getCenterY() + vel;
+
+        kugel.setCenterX(newX);
+        kugel.setCenterY(newY);
+
+        //System.out.println("geschw: " + newVelosity);
+
+        return newVelosity;
+
+
+    }*/
+
+
+
+
+
+
+    @FXML
+    public void dragDone(DragEvent dragEvent) {
+        /* the drag and drop gesture ended */
+        /* if the data was successfully moved, clear it */
+//                if (dragEvent.getTransferMode() == TransferMode.MOVE) {
+//
+//                    elementNeu.setRadius(10);
+//                }
+        dragEvent.consume();
+        System.out.println("Drag done");
+    }
+
+
+
+
+    /*Delete Methoden fangen hier an*/
+
+    public void loeschDrop(DragEvent dragEvent) {
+
+        /* data dropped */
+        /* if there is a string data on dragboard, read it and use it */
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+
+
+        if (db.hasString()) {
+
+            if (db.getString().equals("rectangle")) {
+
+                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
+                c.setFill(new ImagePattern(new Image(imgUrl)));
+                c.setRotate(rotation);
+
+                if (dragEvent.getTarget() instanceof Pane) {
+                    Pane loeschElement = (Pane) dragEvent.getTarget();
+                    loeschElement.getChildren().remove(c);
+
+                }
+                success = true;
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();
+                System.out.println("Drag Dropped");
+            }
+
+        }
+
+    }
+
+    public void loeschEntered(DragEvent dragEvent) {
+
+        /* the drag-and-drop gesture entered the target */
+        /* show to the user that it is an actual gesture target */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag entered");
+
+    }
+
+    public void loeschOver(DragEvent dragEvent) {
+
+        /* data is dragged over the target */
+        /* accept it only if it is not dragged from the same node
+         * and if it has a string data */
+        if (dragEvent.getGestureSource() != target &&
+                dragEvent.getDragboard().hasString()) {
+            /* allow for moving */
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+
+        }
+
+        dragEvent.consume();
+        System.out.println("Drag over");
+
+    }
+
+    public void loeschExited(DragEvent dragEvent) {
+
+        /* mouse moved away, remove the graphical cues */
+
+        dragEvent.consume();
+        System.out.println("Drag exited");
+        
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        kugel.setCenterX(ballStartX);
+        kugel.setCenterY(ballStartY);
+
+
+
+
+        //Method for the pathtracing
 
         path.getElements().add(new MoveTo(460, 110));
         path.getElements().add(new LineTo(460, 300));
@@ -105,8 +377,6 @@ public class Controller implements Initializable {
         pathTransition.setCycleCount(1);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setAutoReverse(false);
-
-
 
 
         /* Methoden für Rotation der Elemente fangen hier an */
@@ -238,87 +508,6 @@ public class Controller implements Initializable {
 
     }
 
-
-    /**
-     * Methode for starting the animation and getting the starting position of the ball, so we can reset our animation later
-     *
-     * @autor Maksymilian Huytra
-     */
-    @FXML
-    public double[] startAnimation() {
-
-
-        ballStartX = kugel.getCenterX();
-        ballStarty = kugel.getCenterY();
-        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
-        pathTransition.setCycleCount(1);
-        pathTransition.play();
-
-        startposition = new double[]{ballStartX, ballStarty};
-
-        animationTimer.start();
-
-        return startposition;
-
-    }
-
-    /**
-     * Methode for stopping  the animation
-     *
-     * @autor Maksymilian Hutyra
-     */
-    @FXML
-    public void stopAnimation() {
-        animationTimer.stop();
-        pathTransition.pause();
-
-    }
-
-    @FXML
-    public void resetAnimation() {
-
-
-        animationTimer.stop();
-        pathTransition.setDuration(Duration.millis(30000 * handleSliderChange()));
-        pathTransition.playFromStart();
-
-
-        kugel.setCenterY(startposition[0]);
-        kugel.setCenterY(startposition[1]);
-
-        vel = 0;
-
-
-    }
-
-
-
-    @FXML
-    public double moveBall() {
-        double sliderValue = handleSliderChange();
-        double newVelosity;
-        // formel für die geschwindigkeit
-        vel = vel + gravity;
-        newVelosity = vel * sliderValue;
-
-
-        //kugel soll für jeden Frame eine neue Position annehmen
-        newX = kugel.getCenterX();
-        newY = kugel.getCenterY() + vel;
-
-        kugel.setCenterX(newX);
-        kugel.setCenterY(newY);
-
-        System.out.println("geschw: " + newVelosity);
-
-        return newVelosity;
-
-
-    }
-
-
-
-
     /* Drag and Drop Methoden fangen hier an */
     @FXML
     public void drag(MouseEvent mouseEvent) {
@@ -412,7 +601,7 @@ public class Controller implements Initializable {
                         param.setFill(Color.TRANSPARENT);
                         db.setDragView(element2.snapshot(param, null));
 
-                       event.consume();
+                        event.consume();
 
                         System.out.println("Drag detected");
                     }
@@ -445,93 +634,6 @@ public class Controller implements Initializable {
 
     }
 
-    @FXML
-    public void dragDone(DragEvent dragEvent) {
-        /* the drag and drop gesture ended */
-        /* if the data was successfully moved, clear it */
-//                if (dragEvent.getTransferMode() == TransferMode.MOVE) {
-//
-//                    elementNeu.setRadius(10);
-//                }
-        dragEvent.consume();
-        System.out.println("Drag done");
-    }
-
-
-
-
-    /*Delete Methoden fangen hier an*/
-
-    public void loeschDrop(DragEvent dragEvent) {
-
-        /* data dropped */
-        /* if there is a string data on dragboard, read it and use it */
-        Dragboard db = dragEvent.getDragboard();
-        boolean success = false;
-
-
-        if (db.hasString()) {
-
-            if (db.getString().equals("rectangle")) {
-
-                Rectangle c = new Rectangle(dragEvent.getX(), dragEvent.getY(), 72, 72);
-                c.setFill(new ImagePattern(new Image(imgUrl)));
-                c.setRotate(rotation);
-
-                if (dragEvent.getTarget() instanceof Pane) {
-                    Pane loeschElement = (Pane) dragEvent.getTarget();
-                    loeschElement.getChildren().remove(c);
-
-                }
-                success = true;
-                dragEvent.setDropCompleted(success);
-
-                dragEvent.consume();
-                System.out.println("Drag Dropped");
-            }
-
-        }
-
-    }
-
-    public void loeschEntered(DragEvent dragEvent) {
-
-        /* the drag-and-drop gesture entered the target */
-        /* show to the user that it is an actual gesture target */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag entered");
-
-    }
-
-    public void loeschOver(DragEvent dragEvent) {
-
-        /* data is dragged over the target */
-        /* accept it only if it is not dragged from the same node
-         * and if it has a string data */
-        if (dragEvent.getGestureSource() != target &&
-                dragEvent.getDragboard().hasString()) {
-            /* allow for moving */
-            dragEvent.acceptTransferModes(TransferMode.MOVE);
-
-        }
-
-        dragEvent.consume();
-        System.out.println("Drag over");
-
-    }
-
-    public void loeschExited(DragEvent dragEvent) {
-
-        /* mouse moved away, remove the graphical cues */
-
-        dragEvent.consume();
-        System.out.println("Drag exited");
-        
-    }
 
 
 }

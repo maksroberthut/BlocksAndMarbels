@@ -32,7 +32,7 @@
             <children>
                 <TabPane fx:id="tapPane" layoutX="24.0" layoutY="61.0" prefHeight="720.0" prefWidth="744.0" side="LEFT" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab text="Ebene 1">
+                        <Tab fx:id="ebene1" text="Ebene 1">
                             <content>
                                 <Pane fx:id="targetEbene1" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
                                     <children>
@@ -64,7 +64,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                         </GridPane>
-                                        <Circle fx:id="kugel" centerX="50.0" centerY="50.0" radius="10" />
+                                        <Circle fx:id ='endpoint' centerX="460" centerY="115" radius="15" fill="gray"/>
+                                        <Circle fx:id="kugel"  radius="10" />
                                         <ImageView fitHeight="703.0" fitWidth="701.0" layoutX="5.0" layoutY="9.0">
                                             <image>
                                                 <Image url="@../resource/Gitter.png" />
@@ -79,7 +80,7 @@
                                 </Pane>
                             </content>
                         </Tab>
-                        <Tab text="Ebene 2">
+                        <Tab fx:id="ebene2" text="Ebene 2">
                             <content>
                                 <Pane fx:id="target" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" prefHeight="200.0" prefWidth="200.0">
                                     <children>
@@ -97,7 +98,7 @@
                                 </Pane>
                             </content>
                         </Tab>
-                        <Tab text="Ebene 3">
+                        <Tab fx:id="ebene3" text="Ebene 3">
                             <content>
                                 <Pane prefHeight="200.0" prefWidth="200.0">
                                     <children>
@@ -115,7 +116,7 @@
                                 </Pane>
                             </content>
                         </Tab>
-                        <Tab text="Ebene 4">
+                        <Tab fx:id="ebene4" text="Ebene 4">
                             <content>
                                 <Pane prefHeight="200.0" prefWidth="200.0">
                                     <children>
@@ -133,7 +134,7 @@
                                 </Pane>
                             </content>
                         </Tab>
-                        <Tab text="Ebene 5">
+                        <Tab fx:id="ebene5" text="Ebene 5">
                             <content>
                                 <Pane prefHeight="200.0" prefWidth="200.0">
                                     <children>

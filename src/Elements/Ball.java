@@ -8,8 +8,8 @@ import java.util.Vector;
 
 
 /**
- * This class represents the ball obj with all the information about the given physical object
- * Might inherert from a Shape Interface
+ * This class represents the ball obj with all the information and physical calculations about the given physical object
+
  * @author Maksymilian Hutyra
  */
 
@@ -22,21 +22,25 @@ public class Ball extends Circle implements Physics{
      */
     public Ball(){
 
+         boolean collision = false;
+
+
+
 
     }
 
     /**
      * Physical Properties of the Circle
      */
-    private double radius;
+    private static double radius;
     //Position in 3 dimensions
-    public double xPos,yPos,zPos;
+    static public double xPos,yPos,zPos;
     //Direction in 3 dimensions
     public double xdir,ydir,zdir;
     //Velocity in 3 dimensions
-    public double vx,vy = 0;
+    public static double vx,vy,vz;
     //Acceleration in 3 dimensions
-    public double ax,ay;
+    static public double ax,ay,az;
     public double g = 9.8;
     public double defaultMass = 0.03;
     public double kineticForce;
@@ -50,15 +54,16 @@ public class Ball extends Circle implements Physics{
 
 
 
-    private double[] velocity = {vx,vy};
-    private double[] acceleration = {ax,ay};
+    private static double[] velocity = {vx,vy,vz};
+    private static double[] acceleration = {ax,ay,az};
 
     /**
      *  Bounce Checking if the ball is moving as a prerequisite for the second
      *  and ongoing itterationand also not calculating when the ball has stopped to move
      * @return true or false
+     * @Author Maksymilian Hutyra
      */
-    public boolean ballIsMoving(){
+    public static boolean ballIsMoving(Circle ball){
 
         double xVel = velocity[0];
         double yVel = velocity[1];
@@ -70,21 +75,14 @@ public class Ball extends Circle implements Physics{
         }
     }
 
-    /**
-     * Is returning the local Bounds with the translation in the room of the Ball
-     * @return
-     */
-    public Bounds getBounds(){
-         Bounds bounds = this.getBoundsInParent();
-         return bounds;
-    }
 
     /**
      * Getting the radius of the javaFx Circle element in our scene
      * @param circle
      * @return radius
+     * @Author Maksymilian Hutyra
      */
-    public double getRadius(Circle circle ){
+     static public double getRadius(Circle circle ){
 
          radius = circle.getRadius();
          return  radius;
@@ -93,35 +91,43 @@ public class Ball extends Circle implements Physics{
     /**
      * Function to get the current position of the Ball and put it into a position Array to describe the dimensions
      * @return positionArray[]
+     * @Autor Maksymiian Hutyra
      */
-    public double[] getCurrentPosition(){
+     static public double[] getCurrentPosition(Circle ball){
 
-        xPos = this.getCenterX();
-        yPos = this.getCenterY();
-        double position[] = {xPos,yPos};
+        xPos = ball.getCenterX();
+        yPos = ball.getCenterY();
+        zPos = ball.getTranslateZ();
+        double position[] = {xPos,yPos,zPos};
         return  position;
     }
 
+
     /**
      * Function for getting the height Difference/ only used in change of Layers
-     * @return
+     * @return zPosiion
+     * @Autor Maksymilian Hutyra
+     *
      */
-    public double getZTranslate(){
-        zPos = this.getTranslateZ();
+     static public double getZTranslate(Circle ball){
+        zPos = ball.getTranslateZ();
         return zPos;
     }
 
     /**
      * Funtion to set the new Position of the Ball
-     * @param position
+     * @param newPosition
+     * @Autor Maksymilian Hutyra
      */
-    public void setNewPosition( double position[]){
+    static public void setNewPosition(Circle ball, double newPosition[]){
 
-        xPos = position[0];
-        yPos = position[1];
+        xPos = newPosition[0];
+        yPos = newPosition[1];
+        zPos = newPosition[2];
 
-        this.setCenterX(xPos);
-        this.setCenterY(yPos);
+        ball.setCenterX(xPos);
+        ball.setCenterY(yPos);
+        ball.setTranslateZ(zPos);
     }
 
     /**
@@ -129,15 +135,18 @@ public class Ball extends Circle implements Physics{
      * and then overwriting the old velocity vector
      * @param position,currentVelocity,
      * return Newly overwirten Velocity Vector
+     * @autor Maksymilian Hutyra
      */
-    public double[] calculateNewVelocityOfTheBalll(double[] position,double deltaTime){
+     static public double[] calculateNewVelocityOfTheBall(Circle ball,double[] position,double deltaTime,double[] acceleration){
 
         double currentVelX = velocity[0];
         double currentVelY = velocity[1];
+        double currentVelZ = velocity[2];
 
         //Calculate new Position, each dimension by its own
         double newVelocityX = Physics.calcNewVelocity(currentVelX,acceleration[0],deltaTime);
         double newVelocityY = Physics.calcNewVelocity(currentVelY,acceleration[1],deltaTime);
+        double newVelocityZ = Physics.calcNewVelocity(currentVelZ,acceleration[2],deltaTime);
         //overwriting the old Position
         velocity[0] = newVelocityX;
         velocity[1] = newVelocityY;
@@ -148,28 +157,34 @@ public class Ball extends Circle implements Physics{
 
     /**
      * Function to calculate the new position of the ball
-     * @param position
+     * @param
      * @param deltaTime
-     * @return
+     * @return overwriten Position Array
+     * @Autor Maksymilian Hutyra
      */
-    public double[] calculateNewPosition(double[] position,double deltaTime){
+     static public double[] calculateNewPosition( Circle ball,double deltaTime,double[] velocity){
 
-        position = this.getCurrentPosition();
+         double []position = Ball.getCurrentPosition(ball);
         double positionX = position[1];
         double positionY = position[1];
+        double positionZ = position[2];
         double velocityX = velocity[0];
         double velocityY = velocity[1];
+        double velocityZ = velocity[2];
 
 
         double newXPos = Physics.calculateNewPosition(velocityX,positionX,acceleration[0],deltaTime);
         double newYPos = Physics.calculateNewPosition(velocityY,positionY,acceleration[1],deltaTime);
+        double newZPos = Physics.calculateNewPosition(velocityZ,positionZ,acceleration[2],deltaTime);
 
         position[0] = newXPos;
         position[1] = newYPos;
+        position[2] = newZPos;
 
         return position;
 
     }
+
 
 
     /**
