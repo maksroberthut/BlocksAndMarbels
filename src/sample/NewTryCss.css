@@ -1,7 +1,26 @@
 
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
 .tab-pane{
 
     -fx-background-color: white;
+    -fx-font-family: 'Verdana', Arial, sans-serif;
+
+}
+.slider .track{
+    -fx-control-inner-background: #ad3838;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #e6e6e6;
 
 }
 
+.tab-pane .tab:selected
+{
+    -fx-background-color: #ad3838;
+}
+.tab:selected .tab-label {
+    -fx-text-fill: white;
+}

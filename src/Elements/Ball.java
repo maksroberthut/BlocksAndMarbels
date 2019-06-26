@@ -93,7 +93,7 @@ public class Ball extends Circle implements Physics{
      * @return positionArray[]
      * @Autor Maksymiian Hutyra
      */
-     static public double[] getCurrentPosition(Circle ball){
+        static public double[] getCurrentPosition(Circle ball){
 
         xPos = ball.getCenterX();
         yPos = ball.getCenterY();
@@ -150,6 +150,7 @@ public class Ball extends Circle implements Physics{
         //overwriting the old Position
         velocity[0] = newVelocityX;
         velocity[1] = newVelocityY;
+        velocity[2] = newVelocityZ;
 
         return velocity;
 

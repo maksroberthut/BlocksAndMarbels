@@ -33,6 +33,7 @@ public interface Physics {
      * @param y1
      * @param y2
      * @return
+     * @Author Maksymilian Hutyra
      */
     static double getDistanceBetweenObjects(double x1, double x2,double y1,double y2){
 
@@ -50,6 +51,7 @@ public interface Physics {
      * @param deltaVelocity
      * @param deltaTime
      * @return
+     * @Author Maksymilian Hutyra
      */
     static double calculateAcceleration(double deltaVelocity, double deltaTime){
 
@@ -64,6 +66,7 @@ public interface Physics {
      * @param
      * @param
      * @return
+     * @Author Maksymilian Hutyra
      */
     static boolean collisionDetection(Circle ball1,double[] positionBall1, Circle ball2,double[] positionBall2, double radiusSum,double[] vel){
 
@@ -90,6 +93,7 @@ public interface Physics {
      * @param velocity1
      * @param velocity2
      * @return
+     * @Author Maksymilian Hutyra
      */
     static double calculateElasticShcok(double mass1, double mass2, double velocity1, double velocity2){
 
@@ -116,6 +120,7 @@ public interface Physics {
      * @param acceleration
      * @param elapsedTime
      * @return
+     * @Author Maksymilian Hutyra
      */
     public static double calcNewVelocity(double velocity,double acceleration,double elapsedTime){
 
@@ -134,7 +139,7 @@ public interface Physics {
      */
     public static double calculateNewPosition(double velocity,double position,double acceleration, double elapsedTime){
 
-        double newPosition = position+velocity+elapsedTime+0.5*acceleration*Math.pow(elapsedTime,2);
+        double newPosition = position+velocity*elapsedTime+0.5*acceleration*Math.pow(elapsedTime,2);
         return  newPosition;
 
     }

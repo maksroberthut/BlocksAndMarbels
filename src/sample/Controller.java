@@ -53,11 +53,12 @@ public class Controller implements Initializable {
             position = Ball.getCurrentPosition(kugel);
             //System.out.println(deltaT);
             startTime = frametime;
-            System.out.println(Arrays.toString(position));
+
 
              vel= Ball.calculateNewVelocityOfTheBall(kugel,position,deltaT,a);
 
              position = Ball.calculateNewPosition(kugel,deltaT,vel);
+            System.out.println(Arrays.toString(position));
              Ball.setNewPosition(kugel,position);
 
 
